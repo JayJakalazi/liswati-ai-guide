@@ -26,7 +26,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
         transition={{ duration: 0.6, ease: "easeOut" }}
       />
       <motion.p
-        className="mt-6 text-sm text-primary-foreground/70 font-body tracking-wider"
+        className="mt-6 text-sm text-primary font-body tracking-wider font-semibold"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
@@ -34,7 +34,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
         Lwati Lesive ngelulwimi lweftu
       </motion.p>
       <motion.div
-        className="mt-4 w-28 rounded-sm overflow-hidden shadow-lg border border-primary-foreground/20"
+        className="mt-4 w-28 rounded-sm overflow-hidden shadow-lg border border-primary/20"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.7, duration: 0.5 }}
@@ -43,7 +43,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
       </motion.div>
       <motion.button
         onClick={onFinish}
-        className="mt-10 px-8 py-3 rounded-full bg-primary-foreground/20 text-primary-foreground font-display font-semibold text-sm backdrop-blur-sm border border-primary-foreground/30 hover:bg-primary-foreground/30 transition-colors"
+        className="mt-10 px-8 py-3 rounded-full bg-primary text-primary-foreground font-display font-semibold text-sm backdrop-blur-sm border border-primary/30 hover:bg-primary/90 transition-colors shadow-md"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.5 }}
