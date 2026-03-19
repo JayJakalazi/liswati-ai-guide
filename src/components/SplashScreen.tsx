@@ -28,7 +28,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        Lwati lwelive, Ngelulwimi lwetfu
+        Lwati Lesive ngelulwimi lweftu
       </motion.p>
       <motion.button
         onClick={onFinish}

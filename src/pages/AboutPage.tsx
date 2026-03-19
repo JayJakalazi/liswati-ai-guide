@@ -18,7 +18,7 @@ const AboutPage = () => {
         <img src={bafoLogo} alt="BAFO AI" className="w-28 h-28 object-contain mb-4" />
         <h2 className="font-display font-bold text-xl text-foreground mb-1">BAFO AI</h2>
         <p className="text-sm text-muted-foreground italic mb-6">
-          "Lwati lwelive, Ngelulwimi lwetfu"
+          "Lwati Lesive ngelulwimi lweftu"
         </p>
         <p className="text-sm text-foreground/80 font-body leading-relaxed mb-4">
           BAFO AI is the Sovereign National Intelligence of Eswatini — a digital citizen built to serve Emaswati with deep knowledge of our traditions, our laws, our businesses, and our education system.
