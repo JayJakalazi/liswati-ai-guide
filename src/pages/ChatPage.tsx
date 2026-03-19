@@ -156,7 +156,7 @@ const ChatPage = () => {
         {messages.map((msg) => (
           <ChatMessage key={msg.id} role={msg.role} content={msg.content} />
         ))}
-        {isTyping && !messages.some(m => m.id === (Date.now() + 1).toString()) && (
+        {isTyping && messages[messages.length - 1]?.role !== "assistant" && (
           <ChatMessage role="assistant" content="" isTyping />
         )}
         <div ref={bottomRef} />
