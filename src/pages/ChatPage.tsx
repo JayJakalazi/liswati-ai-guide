@@ -4,43 +4,64 @@ import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import SideMenu from "@/components/SideMenu";
 import { toast } from "sonner";
+import {
+  Message,
+  Conversation,
+  WELCOME_MESSAGE,
+  migrateOldHistory,
+  getConversations,
+  getActiveId,
+  getConversation,
+  saveConversation,
+  deleteConversation,
+  createNewConversation,
+} from "@/lib/chatStorage";
 
-interface Message {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-}
-
-const WELCOME_MESSAGE: Message = {
-  id: "welcome",
-  role: "assistant",
-  content: "Sanibonani! 🇸🇿 Ngingu **BAFO AI**, bulungiswa-ngcondvo besive saka-Eswatini.\n\nNgingakusita ngaloku:\n\n🏛️ **Emasiko & Umlandvo** – Incwala, Umhlanga, Sibaya\n\n💼 **Lusito Lwebhizinisi** – Kubhaliswa kwenkampani, intela, malayisensi\n\n📚 **BAFO Scholar** – Tinhlelo tekufundza EPC & EGCSE\n\nBhala umlayeto wakho ngesiSwati noma nge-English!",
-};
-
-const STORAGE_KEY = "bafo-chat-history";
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
-const loadMessages = (): Message[] => {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored) as Message[];
-      if (parsed.length > 0) return parsed;
-    }
-  } catch { /* ignore corrupt data */ }
-  return [WELCOME_MESSAGE];
-};
+// Migrate old single-conversation history on first load
+migrateOldHistory();
 
 const ChatPage = () => {
-  const [messages, setMessages] = useState<Message[]>(loadMessages);
+  const [conversations, setConversations] = useState<Conversation[]>(getConversations);
+  const [activeId, setActiveId] = useState<string | null>(() => {
+    const id = getActiveId();
+    if (id && getConversation(id)) return id;
+    // If no active, create a new one
+    const c = createNewConversation();
+    saveConversation(c);
+    return c.id;
+  });
+
+  const activeConvo = conversations.find((c) => c.id === activeId);
+  const messages = activeConvo?.messages ?? [WELCOME_MESSAGE];
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // Persist messages to localStorage
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-  }, [messages]);
+  const refreshConversations = useCallback(() => {
+    setConversations(getConversations());
+  }, []);
+
+  const setMessages = useCallback(
+    (updater: Message[] | ((prev: Message[]) => Message[])) => {
+      setConversations((prevConvos) => {
+        const updated = prevConvos.map((c) => {
+          if (c.id !== activeId) return c;
+          const newMsgs = typeof updater === "function" ? updater(c.messages) : updater;
+          // Update title from first user message
+          const firstUser = newMsgs.find((m) => m.role === "user");
+          const title = firstUser ? firstUser.content.slice(0, 40) : c.title;
+          const updatedConvo = { ...c, messages: newMsgs, title, updatedAt: Date.now() };
+          saveConversation(updatedConvo);
+          return updatedConvo;
+        });
+        return updated.sort((a, b) => b.updatedAt - a.updatedAt);
+      });
+    },
+    [activeId]
+  );
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -51,7 +72,7 @@ const ChatPage = () => {
     setMessages((prev) => [...prev, userMsg]);
     setIsTyping(true);
 
-    const history = [...messages.filter(m => m.id !== "welcome"), userMsg].map(m => ({
+    const history = [...messages.filter((m) => m.id !== "welcome"), userMsg].map((m) => ({
       role: m.role,
       content: m.content,
     }));
@@ -153,7 +174,7 @@ const ChatPage = () => {
                 )
               );
             }
-          } catch { /* ignore */ }
+          } catch {}
         }
       }
     } catch (e) {
@@ -165,14 +186,44 @@ const ChatPage = () => {
   };
 
   const handleNewChat = () => {
-    setMessages([WELCOME_MESSAGE]);
-    localStorage.removeItem(STORAGE_KEY);
+    const c = createNewConversation();
+    saveConversation(c);
+    setActiveId(c.id);
+    refreshConversations();
+  };
+
+  const handleSelectConversation = (id: string) => {
+    setActiveId(id);
+    localStorage.setItem("bafo-active-conversation", id);
+  };
+
+  const handleDeleteConversation = (id: string) => {
+    deleteConversation(id);
+    if (id === activeId) {
+      const remaining = getConversations();
+      if (remaining.length > 0) {
+        setActiveId(remaining[0].id);
+      } else {
+        const c = createNewConversation();
+        saveConversation(c);
+        setActiveId(c.id);
+      }
+    }
+    refreshConversations();
   };
 
   return (
     <div className="flex flex-col h-[100dvh] bg-background">
       <ChatHeader onMenuClick={() => setMenuOpen(true)} onNewChat={handleNewChat} />
-      <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <SideMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        conversations={conversations}
+        activeConversationId={activeId}
+        onSelectConversation={handleSelectConversation}
+        onDeleteConversation={handleDeleteConversation}
+        onNewChat={handleNewChat}
+      />
 
       <div className="flex-1 overflow-y-auto px-3 py-4">
         {messages.map((msg) => (
