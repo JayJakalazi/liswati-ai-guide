@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import bafoLogo from "@/assets/bafo-logo.png";
+import EswatiniFlag from "./EswatiniFlag";
 
 interface SplashScreenProps {
   onFinish: () => void;
@@ -30,6 +31,14 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
       >
         Lwati Lesive ngelulwimi lweftu
       </motion.p>
+      <motion.div
+        className="mt-4 w-20 rounded-sm overflow-hidden shadow-lg border border-primary-foreground/20"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+      >
+        <EswatiniFlag className="w-full h-auto" />
+      </motion.div>
       <motion.button
         onClick={onFinish}
         className="mt-10 px-8 py-3 rounded-full bg-primary-foreground/20 text-primary-foreground font-display font-semibold text-sm backdrop-blur-sm border border-primary-foreground/30 hover:bg-primary-foreground/30 transition-colors"
