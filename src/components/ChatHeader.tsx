@@ -1,11 +1,12 @@
 import bafoLogo from "@/assets/bafo-logo.png";
-import { Menu } from "lucide-react";
+import { Menu, SquarePen } from "lucide-react";
 
 interface ChatHeaderProps {
   onMenuClick: () => void;
+  onNewChat?: () => void;
 }
 
-const ChatHeader = ({ onMenuClick }: ChatHeaderProps) => {
+const ChatHeader = ({ onMenuClick, onNewChat }: ChatHeaderProps) => {
   return (
     <div className="flex items-center gap-3 px-4 py-3 gradient-primary safe-top">
       <button onClick={onMenuClick} className="text-primary-foreground/80 hover:text-primary-foreground">
@@ -16,6 +17,11 @@ const ChatHeader = ({ onMenuClick }: ChatHeaderProps) => {
         <h1 className="text-sm font-display font-semibold text-primary-foreground">BAFO AI</h1>
         <p className="text-xs text-primary-foreground/60">Sovereign Intelligence of Eswatini</p>
       </div>
+      {onNewChat && (
+        <button onClick={onNewChat} className="text-primary-foreground/80 hover:text-primary-foreground" title="New Chat">
+          <SquarePen className="w-5 h-5" />
+        </button>
+      )}
       <div className="w-2 h-2 rounded-full bg-success animate-pulse-glow" />
     </div>
   );
