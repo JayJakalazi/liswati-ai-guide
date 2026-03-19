@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import bafoLogo from "@/assets/bafo-logo.png";
-import EswatiniFlag from "./EswatiniFlag";
+import eswatiniFlag from "@/assets/eswatini-flag.jpg";
 
 interface SplashScreenProps {
   onFinish: () => void;
