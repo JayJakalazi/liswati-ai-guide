@@ -10,7 +10,8 @@ interface SplashScreenProps {
 const SplashScreen = ({ onFinish }: SplashScreenProps) => {
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center gradient-primary"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${splashBg})` }}
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
