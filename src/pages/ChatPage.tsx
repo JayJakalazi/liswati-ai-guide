@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import ChatHeader from "@/components/ChatHeader";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
@@ -17,13 +17,30 @@ const WELCOME_MESSAGE: Message = {
   content: "Sanibonani! 🇸🇿 Ngingu **BAFO AI**, bulungiswa-ngcondvo besive saka-Eswatini.\n\nNgingakusita ngaloku:\n\n🏛️ **Emasiko & Umlandvo** – Incwala, Umhlanga, Sibaya\n\n💼 **Lusito Lwebhizinisi** – Kubhaliswa kwenkampani, intela, malayisensi\n\n📚 **BAFO Scholar** – Tinhlelo tekufundza EPC & EGCSE\n\nBhala umlayeto wakho ngesiSwati noma nge-English!",
 };
 
+const STORAGE_KEY = "bafo-chat-history";
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
+const loadMessages = (): Message[] => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored) as Message[];
+      if (parsed.length > 0) return parsed;
+    }
+  } catch { /* ignore corrupt data */ }
+  return [WELCOME_MESSAGE];
+};
+
 const ChatPage = () => {
-  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
+  const [messages, setMessages] = useState<Message[]>(loadMessages);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  // Persist messages to localStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  }, [messages]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -147,9 +164,14 @@ const ChatPage = () => {
     }
   };
 
+  const handleNewChat = () => {
+    setMessages([WELCOME_MESSAGE]);
+    localStorage.removeItem(STORAGE_KEY);
+  };
+
   return (
     <div className="flex flex-col h-[100dvh] bg-background">
-      <ChatHeader onMenuClick={() => setMenuOpen(true)} />
+      <ChatHeader onMenuClick={() => setMenuOpen(true)} onNewChat={handleNewChat} />
       <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <div className="flex-1 overflow-y-auto px-3 py-4">
