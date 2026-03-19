@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import bafoLogo from "@/assets/bafo-logo.png";
-import EswatiniFlag from "./EswatiniFlag";
+import eswatiniFlag from "@/assets/eswatini-flag.jpg";
 
 interface SplashScreenProps {
   onFinish: () => void;
@@ -37,7 +37,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.7, duration: 0.5 }}
       >
-        <EswatiniFlag className="w-full h-auto" />
+        <img src={eswatiniFlag} alt="Eswatini Flag" className="w-full h-auto rounded-sm" />
       </motion.div>
       <motion.button
         onClick={onFinish}
