@@ -164,9 +164,14 @@ const ChatPage = () => {
     }
   };
 
+  const handleNewChat = () => {
+    setMessages([WELCOME_MESSAGE]);
+    localStorage.removeItem(STORAGE_KEY);
+  };
+
   return (
     <div className="flex flex-col h-[100dvh] bg-background">
-      <ChatHeader onMenuClick={() => setMenuOpen(true)} />
+      <ChatHeader onMenuClick={() => setMenuOpen(true)} onNewChat={handleNewChat} />
       <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <div className="flex-1 overflow-y-auto px-3 py-4">
