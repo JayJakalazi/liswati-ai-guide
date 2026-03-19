@@ -3,6 +3,7 @@ import ChatHeader from "@/components/ChatHeader";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import SideMenu from "@/components/SideMenu";
+import { toast } from "sonner";
 
 interface Message {
   id: string;
@@ -16,6 +17,8 @@ const WELCOME_MESSAGE: Message = {
   content: "Sanibonani! 🇸🇿 Ngingu **BAFO AI**, bulungiswa-ngcondvo besive saka-Eswatini.\n\nNgingakusita ngaloku:\n\n🏛️ **Emasiko & Umlandvo** – Incwala, Umhlanga, Sibaya\n\n💼 **Lusito Lwebhizinisi** – Kubhaliswa kwenkampani, intela, malayisensi\n\n📚 **BAFO Scholar** – Tinhlelo tekufundza EPC & EGCSE\n\nBhala umlayeto wakho ngesiSwati noma nge-English!",
 };
 
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+
 const ChatPage = () => {
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,21 +29,122 @@ const ChatPage = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const handleSend = (text: string) => {
+  const handleSend = async (text: string) => {
     const userMsg: Message = { id: Date.now().toString(), role: "user", content: text };
     setMessages((prev) => [...prev, userMsg]);
     setIsTyping(true);
 
-    // Simulated response (will be replaced with Lovable Cloud backend)
-    setTimeout(() => {
-      const botMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: getBafoResponse(text),
-      };
-      setMessages((prev) => [...prev, botMsg]);
+    const history = [...messages.filter(m => m.id !== "welcome"), userMsg].map(m => ({
+      role: m.role,
+      content: m.content,
+    }));
+
+    let assistantSoFar = "";
+    const assistantId = (Date.now() + 1).toString();
+
+    try {
+      const resp = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ messages: history }),
+      });
+
+      if (!resp.ok) {
+        const errorData = await resp.json().catch(() => ({}));
+        if (resp.status === 429) {
+          toast.error("BAFO is busy right now. Please try again in a moment.");
+        } else if (resp.status === 402) {
+          toast.error("AI credits have been used up. Please add more credits.");
+        } else {
+          toast.error(errorData.error || "Something went wrong. Please try again.");
+        }
+        setIsTyping(false);
+        return;
+      }
+
+      if (!resp.body) throw new Error("No response stream");
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = "";
+      let streamDone = false;
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") {
+            streamDone = true;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantSoFar += content;
+              setMessages((prev) => {
+                const last = prev[prev.length - 1];
+                if (last?.id === assistantId) {
+                  return prev.map((m, i) =>
+                    i === prev.length - 1 ? { ...m, content: assistantSoFar } : m
+                  );
+                }
+                return [...prev, { id: assistantId, role: "assistant", content: assistantSoFar }];
+              });
+            }
+          } catch {
+            textBuffer = line + "\n" + textBuffer;
+            break;
+          }
+        }
+      }
+
+      // Flush remaining buffer
+      if (textBuffer.trim()) {
+        for (let raw of textBuffer.split("\n")) {
+          if (!raw) continue;
+          if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+          if (raw.startsWith(":") || raw.trim() === "") continue;
+          if (!raw.startsWith("data: ")) continue;
+          const jsonStr = raw.slice(6).trim();
+          if (jsonStr === "[DONE]") continue;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantSoFar += content;
+              setMessages((prev) =>
+                prev.map((m, i) =>
+                  i === prev.length - 1 && m.id === assistantId
+                    ? { ...m, content: assistantSoFar }
+                    : m
+                )
+              );
+            }
+          } catch { /* ignore */ }
+        }
+      }
+    } catch (e) {
+      console.error("Chat error:", e);
+      toast.error("Failed to connect to BAFO. Please check your connection.");
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -52,7 +156,9 @@ const ChatPage = () => {
         {messages.map((msg) => (
           <ChatMessage key={msg.id} role={msg.role} content={msg.content} />
         ))}
-        {isTyping && <ChatMessage role="assistant" content="" isTyping />}
+        {isTyping && !messages.some(m => m.id === (Date.now() + 1).toString()) && (
+          <ChatMessage role="assistant" content="" isTyping />
+        )}
         <div ref={bottomRef} />
       </div>
 
@@ -60,28 +166,5 @@ const ChatPage = () => {
     </div>
   );
 };
-
-function getBafoResponse(input: string): string {
-  const lower = input.toLowerCase();
-
-  // Language firewall - detect isiZulu
-  if (lower.includes("sawubona") || lower.includes("unjani") || lower.includes("ngiyabonga")) {
-    return "Ncesi, ngikhuluma siSwati kuphela. Ngingakusita njani? 🙏\n\n(Sorry, I only speak SiSwati and English. How can I help you?)";
-  }
-
-  if (lower.includes("incwala") || lower.includes("tradition") || lower.includes("culture")) {
-    return "**Incwala** yiMkhosi lomkhulu weSive saka-Eswatini 🏛️\n\nIncwala yiMkhosi weKulamula – umkhosi losemtsetfweni lowentiwa ngemnyaka wonkhe. Loku kufaka ekhatsi:\n\n- **Lusekelo** – kubutsa umutsi\n- **Incwala Lenkhulu** – umcimbi lomkhulu\n- **Insimbi yeNkhosi** – kuhlonipha bukhosi\n\nUfuna kwati lokunengi ngalomkhosi?";
-  }
-
-  if (lower.includes("business") || lower.includes("company") || lower.includes("bhizinisi")) {
-    return "💼 **Kubhalisa Inkampani e-Eswatini:**\n\n1. Tfola libito lenkampani ku-**Registrar of Companies**\n2. Bhalisa i-**TIN** ku-**ERS** ([ers.org.sz](https://ers.org.sz))\n3. Tfola i-**Trading License** ku-Municipality\n4. Bhalisa i-**VAT** (uma umtsengiso ungaphandle kwa-SZL 500,000)\n\n📎 Vakashela: [Business Eswatini](https://www.businesseswatini.com)\n\nUfuna ngisakhe i-business plan?";
-  }
-
-  if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey")) {
-    return "Yebo! 👋 Ngingu BAFO AI. Ngingakusita njani lamuhla?\n\nHow can I help you today?";
-  }
-
-  return "Ngiyabonga ngembuzo wakho! 🤔\n\nNgisasebenta ekutfoleni imphendvulo lenhle. Ungatsi ungishele kabanzi ngaloko lofuna kwati ngako?\n\n(Thank you for your question! Can you tell me more about what you'd like to know?)";
-}
 
 export default ChatPage;
