@@ -26,7 +26,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
         transition={{ duration: 0.6, ease: "easeOut" }}
       />
       <motion.p
-        className="mt-6 text-sm text-primary-foreground/70 font-body tracking-wider"
+        className="mt-6 text-sm text-primary font-body tracking-wider font-semibold"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
