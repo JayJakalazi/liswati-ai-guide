@@ -43,7 +43,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
       </motion.div>
       <motion.button
         onClick={onFinish}
-        className="mt-10 px-8 py-3 rounded-full bg-primary-foreground/20 text-primary-foreground font-display font-semibold text-sm backdrop-blur-sm border border-primary-foreground/30 hover:bg-primary-foreground/30 transition-colors"
+        className="mt-10 px-8 py-3 rounded-full bg-primary text-primary-foreground font-display font-semibold text-sm backdrop-blur-sm border border-primary/30 hover:bg-primary/90 transition-colors shadow-md"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.5 }}
