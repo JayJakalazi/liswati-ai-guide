@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import bafoLogo from "@/assets/bafo-logo.png";
 import eswatiniFlag from "@/assets/eswatini-flag-horizontal.jpg";
+import splashBg from "@/assets/splash-bg.jpg";
 
 interface SplashScreenProps {
   onFinish: () => void;
@@ -9,7 +10,8 @@ interface SplashScreenProps {
 const SplashScreen = ({ onFinish }: SplashScreenProps) => {
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center gradient-primary"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${splashBg})` }}
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
