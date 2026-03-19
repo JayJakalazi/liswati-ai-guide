@@ -32,12 +32,12 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
         Lwati Lesive ngelulwimi lweftu
       </motion.p>
       <motion.div
-        className="mt-4 w-20 rounded-sm overflow-hidden shadow-lg border border-primary-foreground/20"
+        className="mt-4 w-32 rounded-sm overflow-hidden shadow-lg border border-primary-foreground/20"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.7, duration: 0.5 }}
       >
-        <img src={eswatiniFlag} alt="Eswatini Flag" className="w-full h-auto rounded-sm" />
+        <img src={eswatiniFlag} alt="Eswatini Flag" className="w-full h-auto rounded-sm rotate-90" />
       </motion.div>
       <motion.button
         onClick={onFinish}
