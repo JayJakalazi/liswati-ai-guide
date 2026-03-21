@@ -23,23 +23,17 @@ const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 migrateOldHistory();
 
 const ChatPage = () => {
-  const [conversations, setConversations] = useState<Conversation[]>(() => {
-    const existing = getConversations();
-    if (existing.length > 0) return existing;
-    const c = createNewConversation();
-    saveConversation(c);
-    return [c];
-  });
   const [activeId, setActiveId] = useState<string | null>(() => {
     const id = getActiveId();
     if (id && getConversation(id)) return id;
     const convos = getConversations();
-    if (convos.length > 0) {
-      setActiveId(convos[0].id);
-      return convos[0].id;
-    }
-    return null;
+    if (convos.length > 0) return convos[0].id;
+    const c = createNewConversation();
+    saveConversation(c);
+    return c.id;
   });
+
+  const [conversations, setConversations] = useState<Conversation[]>(getConversations);
 
   const activeConvo = conversations.find((c) => c.id === activeId);
   const messages = activeConvo?.messages ?? [WELCOME_MESSAGE];
