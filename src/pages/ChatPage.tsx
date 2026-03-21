@@ -49,16 +49,29 @@ const ChatPage = () => {
   const setMessages = useCallback(
     (updater: Message[] | ((prev: Message[]) => Message[])) => {
       setConversations((prevConvos) => {
+        let found = false;
         const updated = prevConvos.map((c) => {
           if (c.id !== activeId) return c;
+          found = true;
           const newMsgs = typeof updater === "function" ? updater(c.messages) : updater;
-          // Update title from first user message
           const firstUser = newMsgs.find((m) => m.role === "user");
           const title = firstUser ? firstUser.content.slice(0, 40) : c.title;
           const updatedConvo = { ...c, messages: newMsgs, title, updatedAt: Date.now() };
           saveConversation(updatedConvo);
           return updatedConvo;
         });
+        // If conversation wasn't in React state, load it from localStorage
+        if (!found && activeId) {
+          const convo = getConversation(activeId);
+          if (convo) {
+            const newMsgs = typeof updater === "function" ? updater(convo.messages) : updater;
+            const firstUser = newMsgs.find((m) => m.role === "user");
+            const title = firstUser ? firstUser.content.slice(0, 40) : convo.title;
+            const updatedConvo = { ...convo, messages: newMsgs, title, updatedAt: Date.now() };
+            saveConversation(updatedConvo);
+            updated.push(updatedConvo);
+          }
+        }
         return updated.sort((a, b) => b.updatedAt - a.updatedAt);
       });
     },
