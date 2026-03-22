@@ -13,6 +13,8 @@ export interface Conversation {
 
 const CONVERSATIONS_KEY = "bafo-conversations";
 const ACTIVE_KEY = "bafo-active-conversation";
+const RETENTION_DAYS = 7;
+const RETENTION_MS = RETENTION_DAYS * 24 * 60 * 60 * 1000;
 
 export const WELCOME_MESSAGE: Message = {
   id: "welcome",
@@ -24,7 +26,11 @@ export const WELCOME_MESSAGE: Message = {
 function loadAll(): Conversation[] {
   try {
     const raw = localStorage.getItem(CONVERSATIONS_KEY);
-    if (raw) return JSON.parse(raw) as Conversation[];
+    if (raw) {
+      const convos = JSON.parse(raw) as Conversation[];
+      const cutoff = Date.now() - RETENTION_MS;
+      return convos.filter((c) => c.updatedAt >= cutoff);
+    }
   } catch {}
   return [];
 }
