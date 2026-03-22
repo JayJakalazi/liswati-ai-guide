@@ -31,7 +31,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        Lwati Lesive ngelulwimi lweftu
+        Lwati Lwesive ngelulwimi lweftu
       </motion.p>
       <motion.div
         className="mt-4 w-28 rounded-sm overflow-hidden shadow-lg border border-primary/20"
