@@ -47,7 +47,7 @@ const tiers = [
       "Draft business plans & contracts",
       "Tax & compliance guidance",
     ],
-    cta: "Go INGWENYAMA",
+    cta: "Go NGCONDVONGCONDVO",
     active: false,
     style: "gradient-primary text-primary-foreground",
   },
