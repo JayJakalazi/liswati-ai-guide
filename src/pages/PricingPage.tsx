@@ -35,7 +35,7 @@ const tiers = [
     style: "bg-card border-primary",
   },
   {
-    name: "INGWENYAMA",
+    name: "NGCONDVONGCONDVO",
     subtitle: "Premium",
     price: "SZL 40",
     period: "/month",
