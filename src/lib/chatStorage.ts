@@ -20,7 +20,7 @@ export const WELCOME_MESSAGE: Message = {
   id: "welcome",
   role: "assistant",
   content:
-    "Sanibonani! 🇸🇿 Ngingu **BAFO AI**, buhlakani besive saka-Ngwane.\n\nNgingakusita ngaloku:\n\n🏛️ **Emasiko & Umlandvo** – Incwala, Umhlanga, Sibaya\n\n💼 **Lusito Lwebhizinisi** – Kubhaliswa kwenkampani, intela, malayisensi\n\n📚 **BAFO Scholar** – Tinhlelo tekufundza EPC & EGCSE\n\nBhala umlayeto wakho ngesiSwati nobe nge-English!",
+    "Sawubona! 🇸🇿 Ngingu **BAFO** umngani wakho waseSwatini.\n\nNgingaku sita ngani namuhla?\n\n🏛️ **Emasiko & Umlandvo** – Incwala, Umhlanga, Sibaya\n\n💼 **Lusito Lwebhizinisi** – Kubhaliswa kwenkampani, intela, malayisensi\n\n📚 **BAFO Scholar** – Tinhlelo tekufundza EPC & EGCSE\n\nBhala umlayeto wakho ngesiSwati nobe nge-English!",
 };
 
 function loadAll(): Conversation[] {

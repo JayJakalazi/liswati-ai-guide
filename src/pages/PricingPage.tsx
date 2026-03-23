@@ -35,7 +35,7 @@ const tiers = [
     style: "bg-card border-primary",
   },
   {
-    name: "INGWENYAMA",
+    name: "NGCONDVONGCONDVO",
     subtitle: "Premium",
     price: "SZL 40",
     period: "/month",
@@ -47,7 +47,7 @@ const tiers = [
       "Draft business plans & contracts",
       "Tax & compliance guidance",
     ],
-    cta: "Go INGWENYAMA",
+    cta: "Go NGCONDVONGCONDVO",
     active: false,
     style: "gradient-primary text-primary-foreground",
   },
