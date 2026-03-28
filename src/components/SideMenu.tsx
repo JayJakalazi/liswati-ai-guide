@@ -26,7 +26,7 @@ const SideMenu = ({
   const navigate = useNavigate();
 
   const menuItems = [
-    { icon: BookOpen, label: "BAFO Scholar", action: () => onClose() },
+    { icon: BookOpen, label: "BAFO Scholar", action: () => { navigate("/scholar"); onClose(); } },
     { icon: CreditCard, label: "Subscription", action: () => { navigate("/pricing"); onClose(); } },
     { icon: Info, label: "About BAFO", action: () => { navigate("/about"); onClose(); } },
   ];
