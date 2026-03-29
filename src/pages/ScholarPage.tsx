@@ -32,6 +32,40 @@ const egcseSubjects: Subject[] = [
   { name: "Art & Design", icon: <Palette className="w-5 h-5" />, topics: ["Drawing & Painting", "Eswatini Traditional Art", "Design Principles", "Mixed Media"] },
 ];
 
+interface PastPaperLink {
+  name: string;
+  url: string;
+  description: string;
+  level: "epc" | "egcse" | "all";
+}
+
+const pastPaperLinks: PastPaperLink[] = [
+  {
+    name: "Examinations Council of Eswatini",
+    url: "https://www.examscouncil.org.sz",
+    description: "Official past papers, syllabi & examiner reports",
+    level: "all",
+  },
+  {
+    name: "Eswatini Papers",
+    url: "https://www.eswatinipapers.com",
+    description: "EPC, JC & EGCSE past exam papers library",
+    level: "all",
+  },
+  {
+    name: "MTN Educare (Khanyisa)",
+    url: "https://www.khanyisa.online/educare/exampapers/",
+    description: "Free past papers from the Ministry of Education",
+    level: "all",
+  },
+  {
+    name: "EGCSE Past Papers",
+    url: "https://www.eswatinipapers.com/egcse",
+    description: "EGCSE/SGCSE papers — all subjects",
+    level: "egcse",
+  },
+];
+
 const ScholarPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"epc" | "egcse">("epc");
