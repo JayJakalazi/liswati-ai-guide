@@ -64,6 +64,18 @@ const pastPaperLinks: PastPaperLink[] = [
     description: "EGCSE/SGCSE papers — all subjects",
     level: "egcse",
   },
+  {
+    name: "Mathematics Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=46&programme=EGCSE",
+    description: "EGCSE Mathematics papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "EPC Mathematics Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/grade7/",
+    description: "EPC Mathematics past papers — Grade 7",
+    level: "epc",
+  },
 ];
 
 const ScholarPage = () => {
