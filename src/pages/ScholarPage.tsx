@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor } from "lucide-react";
+import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,6 +30,40 @@ const egcseSubjects: Subject[] = [
   { name: "Commerce", icon: <FileText className="w-5 h-5" />, topics: ["Business Organisation", "Banking", "Insurance", "Trade", "Marketing"] },
   { name: "Computer Studies", icon: <Monitor className="w-5 h-5" />, topics: ["Hardware & Software", "Programming Basics", "Databases", "Networking", "Cyber Security"] },
   { name: "Art & Design", icon: <Palette className="w-5 h-5" />, topics: ["Drawing & Painting", "Eswatini Traditional Art", "Design Principles", "Mixed Media"] },
+];
+
+interface PastPaperLink {
+  name: string;
+  url: string;
+  description: string;
+  level: "epc" | "egcse" | "all";
+}
+
+const pastPaperLinks: PastPaperLink[] = [
+  {
+    name: "Examinations Council of Eswatini",
+    url: "https://www.examscouncil.org.sz",
+    description: "Official past papers, syllabi & examiner reports",
+    level: "all",
+  },
+  {
+    name: "Eswatini Papers",
+    url: "https://www.eswatinipapers.com",
+    description: "EPC, JC & EGCSE past exam papers library",
+    level: "all",
+  },
+  {
+    name: "MTN Educare (Khanyisa)",
+    url: "https://www.khanyisa.online/educare/exampapers/",
+    description: "Free past papers from the Ministry of Education",
+    level: "all",
+  },
+  {
+    name: "EGCSE Past Papers",
+    url: "https://www.eswatinipapers.com/egcse",
+    description: "EGCSE/SGCSE papers — all subjects",
+    level: "egcse",
+  },
 ];
 
 const ScholarPage = () => {
@@ -134,6 +168,38 @@ const ScholarPage = () => {
             ))}
           </motion.div>
         </AnimatePresence>
+
+        {/* Past Papers Section */}
+        <div className="mt-6 pt-4 border-t border-border">
+          <div className="flex items-center gap-2 mb-3">
+            <Download className="w-4 h-4 text-primary" />
+            <h3 className="font-display font-bold text-sm text-foreground">Past Exam Papers</h3>
+          </div>
+          <p className="text-xs text-muted-foreground font-body mb-3">
+            Downloadisha emaphepha etiviwo takadzeni kuletisayithi:
+          </p>
+          <div className="space-y-2">
+            {pastPaperLinks
+              .filter((link) => link.level === "all" || link.level === activeTab)
+              .map((link) => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <ExternalLink className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                    <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
+                  </div>
+                </a>
+              ))}
+          </div>
+        </div>
       </div>
     </div>
   );
