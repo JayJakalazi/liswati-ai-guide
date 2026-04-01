@@ -345,9 +345,7 @@ const ScholarPage = () => {
             Downloadisha emaphepha etiviwo takadzeni kuletisayithi:
           </p>
           <div className="space-y-2">
-            {pastPaperLinks
-              .filter((link) => link.level === "all" || link.level === activeTab)
-              .map((link) => (
+            {filteredPaperLinks.map((link) => (
                 <a
                   key={link.url}
                   href={link.url}
