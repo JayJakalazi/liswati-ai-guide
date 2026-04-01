@@ -1,6 +1,6 @@
-import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download } from "lucide-react";
+import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download, Search, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Subject {
@@ -202,8 +202,23 @@ const ScholarPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"epc" | "egcse">("epc");
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const subjects = activeTab === "epc" ? epcSubjects : egcseSubjects;
+  const allSubjects = activeTab === "epc" ? epcSubjects : egcseSubjects;
+  const filteredPaperLinks = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    return pastPaperLinks
+      .filter((link) => link.level === "all" || link.level === activeTab)
+      .filter((link) => !q || link.name.toLowerCase().includes(q) || link.description.toLowerCase().includes(q));
+  }, [searchQuery, activeTab]);
+
+  const subjects = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    if (!q) return allSubjects;
+    return allSubjects.filter(
+      (s) => s.name.toLowerCase().includes(q) || s.topics.some((t) => t.toLowerCase().includes(q))
+    );
+  }, [searchQuery, allSubjects]);
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col">
@@ -248,6 +263,25 @@ const ScholarPage = () => {
           <GraduationCap className="w-4 h-4 inline mr-1.5" />
           EGCSE / SGCSE
         </button>
+      </div>
+
+      {/* Search */}
+      <div className="px-5 mb-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Sesha sibodzve noma ithopiki..."
+            className="w-full pl-9 pr-9 py-2.5 rounded-xl bg-muted border border-border text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+          {searchQuery && (
+            <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Subjects */}
@@ -311,9 +345,7 @@ const ScholarPage = () => {
             Downloadisha emaphepha etiviwo takadzeni kuletisayithi:
           </p>
           <div className="space-y-2">
-            {pastPaperLinks
-              .filter((link) => link.level === "all" || link.level === activeTab)
-              .map((link) => (
+            {filteredPaperLinks.map((link) => (
                 <a
                   key={link.url}
                   href={link.url}
