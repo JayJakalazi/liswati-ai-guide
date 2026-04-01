@@ -76,6 +76,90 @@ const pastPaperLinks: PastPaperLink[] = [
     description: "EPC Mathematics past papers — Grade 7",
     level: "epc",
   },
+  {
+    name: "Biology Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=38&programme=EGCSE",
+    description: "EGCSE Biology papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "English Language Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=42&programme=EGCSE",
+    description: "EGCSE English Language papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "SiSwati Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=57&programme=EGCSE",
+    description: "EGCSE SiSwati papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "French Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=43&programme=EGCSE",
+    description: "EGCSE French papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Religious Studies Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=55&programme=EGCSE",
+    description: "EGCSE Religious Studies papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Design & Technology Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=41&programme=EGCSE",
+    description: "EGCSE Design & Technology papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Physics Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=52&programme=EGCSE",
+    description: "EGCSE Physics papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Chemistry Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=39&programme=EGCSE",
+    description: "EGCSE Chemistry papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Literature in English Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=45&programme=EGCSE",
+    description: "EGCSE Literature in English papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Accounts Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=36&programme=EGCSE",
+    description: "EGCSE Accounts/Principles of Accounts papers",
+    level: "egcse",
+  },
+  {
+    name: "Economics Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=40&programme=EGCSE",
+    description: "EGCSE Economics papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "History Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=44&programme=EGCSE",
+    description: "EGCSE History papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Geography Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=43&programme=EGCSE",
+    description: "EGCSE Geography papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "ICT Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=48&programme=EGCSE",
+    description: "EGCSE Information & Communication Technology papers",
+    level: "egcse",
+  },
 ];
 
 const ScholarPage = () => {
