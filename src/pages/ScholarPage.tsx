@@ -77,6 +77,42 @@ const pastPaperLinks: PastPaperLink[] = [
     level: "epc",
   },
   {
+    name: "EPC English Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/grade7/",
+    description: "EPC English past papers — Grade 7",
+    level: "epc",
+  },
+  {
+    name: "EPC SiSwati Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/grade7/",
+    description: "EPC SiSwati past papers — Grade 7",
+    level: "epc",
+  },
+  {
+    name: "EPC Science Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/grade7/",
+    description: "EPC Science past papers — Grade 7",
+    level: "epc",
+  },
+  {
+    name: "EPC Geography Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/grade7/",
+    description: "EPC Geography past papers — Grade 7",
+    level: "epc",
+  },
+  {
+    name: "EPC History Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/grade7/",
+    description: "EPC History past papers — Grade 7",
+    level: "epc",
+  },
+  {
+    name: "EPC Agriculture Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/grade7/",
+    description: "EPC Agriculture past papers — Grade 7",
+    level: "epc",
+  },
+  {
     name: "Biology Past Papers",
     url: "https://www.examscouncil.org.sz/programmes/subject.php?id=38&programme=EGCSE",
     description: "EGCSE Biology papers & marking schemes",
