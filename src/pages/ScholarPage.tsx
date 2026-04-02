@@ -196,6 +196,30 @@ const pastPaperLinks: PastPaperLink[] = [
     description: "EGCSE Information & Communication Technology papers",
     level: "egcse",
   },
+  {
+    name: "Agriculture Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=37&programme=EGCSE",
+    description: "EGCSE Agriculture papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Commerce Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=40&programme=EGCSE",
+    description: "EGCSE Commerce papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Computer Studies Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=48&programme=EGCSE",
+    description: "EGCSE Computer Studies papers & marking schemes",
+    level: "egcse",
+  },
+  {
+    name: "Art & Design Past Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=35&programme=EGCSE",
+    description: "EGCSE Art & Design papers & marking schemes",
+    level: "egcse",
+  },
 ];
 
 const ScholarPage = () => {
