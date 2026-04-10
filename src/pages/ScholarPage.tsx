@@ -233,11 +233,65 @@ const pastPaperLinks: PastPaperLink[] = [
     description: "EGCSE Art & Design papers & marking schemes",
     level: "egcse",
   },
+  {
+    name: "JC Past Papers (All Subjects)",
+    url: "https://www.eswatinipapers.com/jc",
+    description: "JC past exam papers — all subjects",
+    level: "jc",
+  },
+  {
+    name: "JC Mathematics Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Mathematics past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC English Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC English Language past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC SiSwati Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC SiSwati past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Science Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Science past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Geography Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Geography past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC History Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC History past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Agriculture Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Agriculture past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Commerce Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Commerce past papers — Form 3",
+    level: "jc",
+  },
 ];
 
 const ScholarPage = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"epc" | "egcse">("epc");
+  const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse">("epc");
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
