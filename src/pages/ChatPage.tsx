@@ -245,7 +245,20 @@ const ChatPage = () => {
 
       <div className="flex-1 overflow-y-auto px-3 py-4">
         {messages.map((msg) => (
-          <ChatMessage key={msg.id} role={msg.role} content={msg.content} />
+          <ChatMessage
+            key={msg.id}
+            role={msg.role}
+            content={msg.content}
+            onPlayAudio={(text) => {
+              setPlayingMessageId(msg.id);
+              playTTS(text).finally(() => setPlayingMessageId(null));
+            }}
+            isPlayingAudio={isPlayingAudio && playingMessageId === msg.id}
+            onStopAudio={() => {
+              stopAudio();
+              setPlayingMessageId(null);
+            }}
+          />
         ))}
         {isTyping && messages[messages.length - 1]?.role !== "assistant" && (
           <ChatMessage role="assistant" content="" isTyping />
@@ -253,7 +266,25 @@ const ChatPage = () => {
         <div ref={bottomRef} />
       </div>
 
-      <ChatInput onSend={handleSend} disabled={isTyping} />
+      <ChatInput
+        onSend={handleSend}
+        disabled={isTyping}
+        isRecording={isRecording}
+        onMicClick={async () => {
+          if (isRecording) {
+            stopListening();
+            return;
+          }
+          try {
+            const transcript = await startListening();
+            if (transcript) {
+              handleSend(transcript);
+            }
+          } catch {
+            // error already toasted in hook
+          }
+        }}
+      />
     </div>
   );
 };
