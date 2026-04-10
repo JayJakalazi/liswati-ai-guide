@@ -1,13 +1,17 @@
 import bafoLogo from "@/assets/bafo-logo.png";
 import ReactMarkdown from "react-markdown";
+import { Volume2, VolumeX } from "lucide-react";
 
 interface ChatMessageProps {
   role: "user" | "assistant";
   content: string;
   isTyping?: boolean;
+  onPlayAudio?: (text: string) => void;
+  isPlayingAudio?: boolean;
+  onStopAudio?: () => void;
 }
 
-const ChatMessage = ({ role, content, isTyping }: ChatMessageProps) => {
+const ChatMessage = ({ role, content, isTyping, onPlayAudio, isPlayingAudio, onStopAudio }: ChatMessageProps) => {
   const isBot = role === "assistant";
 
   return (
@@ -33,9 +37,23 @@ const ChatMessage = ({ role, content, isTyping }: ChatMessageProps) => {
             <span className="w-2 h-2 rounded-full bg-muted-foreground/50 animate-pulse-glow [animation-delay:0.6s]" />
           </div>
         ) : isBot ? (
-          <div className="prose prose-sm max-w-none text-card-foreground [&_p]:mb-1 [&_p:last-child]:mb-0">
-            <ReactMarkdown>{content}</ReactMarkdown>
-          </div>
+          <>
+            <div className="prose prose-sm max-w-none text-card-foreground [&_p]:mb-1 [&_p:last-child]:mb-0">
+              <ReactMarkdown>{content}</ReactMarkdown>
+            </div>
+            {content && onPlayAudio && (
+              <button
+                onClick={() => isPlayingAudio ? onStopAudio?.() : onPlayAudio(content)}
+                className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {isPlayingAudio ? (
+                  <><VolumeX className="w-3.5 h-3.5" /> Stop</>
+                ) : (
+                  <><Volume2 className="w-3.5 h-3.5" /> Listen</>
+                )}
+              </button>
+            )}
+          </>
         ) : (
           <p>{content}</p>
         )}
