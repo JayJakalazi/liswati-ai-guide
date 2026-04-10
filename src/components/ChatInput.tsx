@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Send, Mic } from "lucide-react";
+import { Send, Mic, MicOff } from "lucide-react";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
   disabled?: boolean;
+  isRecording?: boolean;
+  onMicClick?: () => void;
 }
 
-const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
+const ChatInput = ({ onSend, disabled, isRecording, onMicClick }: ChatInputProps) => {
   const [input, setInput] = useState("");
 
   const handleSend = () => {
@@ -18,6 +20,19 @@ const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
 
   return (
     <div className="flex items-end gap-2 p-3 bg-card border-t border-border safe-bottom">
+      <button
+        onClick={onMicClick}
+        disabled={disabled && !isRecording}
+        className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm ${
+          isRecording
+            ? "bg-destructive text-destructive-foreground animate-pulse"
+            : "bg-muted text-muted-foreground hover:bg-accent"
+        }`}
+        title={isRecording ? "Stop recording" : "Voice input"}
+      >
+        {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+      </button>
+
       <div className="flex-1 flex items-end bg-muted rounded-2xl px-4 py-2">
         <textarea
           value={input}
