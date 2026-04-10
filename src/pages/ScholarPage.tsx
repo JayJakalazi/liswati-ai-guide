@@ -49,7 +49,7 @@ interface PastPaperLink {
   name: string;
   url: string;
   description: string;
-  level: "epc" | "egcse" | "all";
+  level: "epc" | "jc" | "egcse" | "all";
 }
 
 const pastPaperLinks: PastPaperLink[] = [
