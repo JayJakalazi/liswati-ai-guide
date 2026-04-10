@@ -4,6 +4,7 @@ import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import SideMenu from "@/components/SideMenu";
 import { toast } from "sonner";
+import { useVoiceChat } from "@/hooks/useVoiceChat";
 import {
   Message,
   Conversation,
