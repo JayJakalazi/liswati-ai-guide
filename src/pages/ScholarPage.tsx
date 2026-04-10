@@ -295,7 +295,7 @@ const ScholarPage = () => {
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const allSubjects = activeTab === "epc" ? epcSubjects : egcseSubjects;
+  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjects : egcseSubjects;
   const filteredPaperLinks = useMemo(() => {
     const q = searchQuery.toLowerCase();
     return pastPaperLinks
@@ -332,28 +332,24 @@ const ScholarPage = () => {
 
       {/* Tabs */}
       <div className="flex gap-2 px-5 mb-4">
-        <button
-          onClick={() => { setActiveTab("epc"); setExpandedSubject(null); }}
-          className={`flex-1 py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
-            activeTab === "epc"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground"
-          }`}
-        >
-          <GraduationCap className="w-4 h-4 inline mr-1.5" />
-          EPC
-        </button>
-        <button
-          onClick={() => { setActiveTab("egcse"); setExpandedSubject(null); }}
-          className={`flex-1 py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
-            activeTab === "egcse"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground"
-          }`}
-        >
-          <GraduationCap className="w-4 h-4 inline mr-1.5" />
-          EGCSE / SGCSE
-        </button>
+        {([
+          { key: "epc" as const, label: "EPC" },
+          { key: "jc" as const, label: "JC" },
+          { key: "egcse" as const, label: "EGCSE" },
+        ]).map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => { setActiveTab(tab.key); setExpandedSubject(null); }}
+            className={`flex-1 py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
+              activeTab === tab.key
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground"
+            }`}
+          >
+            <GraduationCap className="w-4 h-4 inline mr-1.5" />
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Search */}
