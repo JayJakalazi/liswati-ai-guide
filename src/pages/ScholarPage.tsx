@@ -19,6 +19,19 @@ const epcSubjects: Subject[] = [
   { name: "Agriculture", icon: <Sprout className="w-5 h-5" />, topics: ["Kulima Kudla", "Kufuya Tinkhomo", "Inhlanyelo neMbewu", "Umhlaba neMvula"] },
 ];
 
+const jcSubjects: Subject[] = [
+  { name: "SiSwati", icon: <Languages className="w-5 h-5" />, topics: ["Kuhlaziya inkondlo", "Kubhala indzaba", "Luhlelo lwelulwimi", "Kuhumusha", "Kufundzisisa kucondza"] },
+  { name: "English Language", icon: <Globe className="w-5 h-5" />, topics: ["Comprehension", "Composition", "Grammar & Usage", "Summary Writing", "Letter Writing"] },
+  { name: "Mathematics", icon: <Calculator className="w-5 h-5" />, topics: ["Algebra", "Geometry", "Statistics", "Number & Operations", "Measurement", "Ratio & Proportion"] },
+  { name: "Science", icon: <FlaskConical className="w-5 h-5" />, topics: ["Biology Basics", "Chemistry Basics", "Physics Basics", "Scientific Investigation"] },
+  { name: "Geography", icon: <MapPin className="w-5 h-5" />, topics: ["Map Reading", "Weather & Climate", "Population", "Settlement", "Physical Landscape"] },
+  { name: "History", icon: <Landmark className="w-5 h-5" />, topics: ["Eswatini Pre-colonial History", "Colonial Period", "Southern Africa", "World History Basics"] },
+  { name: "Agriculture", icon: <Sprout className="w-5 h-5" />, topics: ["Crop Farming", "Animal Farming", "Soil & Water", "Farm Tools & Equipment"] },
+  { name: "Commerce", icon: <FileText className="w-5 h-5" />, topics: ["Business Basics", "Banking", "Trade", "Consumer Education"] },
+  { name: "Home Economics", icon: <BookOpen className="w-5 h-5" />, topics: ["Nutrition", "Food Preparation", "Textiles", "Home Management"] },
+  { name: "Religious Education", icon: <BookOpen className="w-5 h-5" />, topics: ["Christianity", "African Traditional Religion", "Moral Education", "Ethics"] },
+];
+
 const egcseSubjects: Subject[] = [
   { name: "SiSwati", icon: <Languages className="w-5 h-5" />, topics: ["Umlandvo weSiSwati", "Inchubo yekubhala", "Tinkondlo", "Kuhumusha lokujulile", "Umsebenti welulwimi"] },
   { name: "English Language", icon: <Globe className="w-5 h-5" />, topics: ["Directed Writing", "Composition", "Comprehension", "Summary", "Language Usage"] },
@@ -36,7 +49,7 @@ interface PastPaperLink {
   name: string;
   url: string;
   description: string;
-  level: "epc" | "egcse" | "all";
+  level: "epc" | "jc" | "egcse" | "all";
 }
 
 const pastPaperLinks: PastPaperLink[] = [
@@ -220,15 +233,69 @@ const pastPaperLinks: PastPaperLink[] = [
     description: "EGCSE Art & Design papers & marking schemes",
     level: "egcse",
   },
+  {
+    name: "JC Past Papers (All Subjects)",
+    url: "https://www.eswatinipapers.com/jc",
+    description: "JC past exam papers — all subjects",
+    level: "jc",
+  },
+  {
+    name: "JC Mathematics Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Mathematics past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC English Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC English Language past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC SiSwati Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC SiSwati past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Science Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Science past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Geography Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Geography past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC History Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC History past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Agriculture Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Agriculture past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Commerce Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Commerce past papers — Form 3",
+    level: "jc",
+  },
 ];
 
 const ScholarPage = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"epc" | "egcse">("epc");
+  const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse">("epc");
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const allSubjects = activeTab === "epc" ? epcSubjects : egcseSubjects;
+  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjects : egcseSubjects;
   const filteredPaperLinks = useMemo(() => {
     const q = searchQuery.toLowerCase();
     return pastPaperLinks
@@ -265,28 +332,24 @@ const ScholarPage = () => {
 
       {/* Tabs */}
       <div className="flex gap-2 px-5 mb-4">
-        <button
-          onClick={() => { setActiveTab("epc"); setExpandedSubject(null); }}
-          className={`flex-1 py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
-            activeTab === "epc"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground"
-          }`}
-        >
-          <GraduationCap className="w-4 h-4 inline mr-1.5" />
-          EPC
-        </button>
-        <button
-          onClick={() => { setActiveTab("egcse"); setExpandedSubject(null); }}
-          className={`flex-1 py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
-            activeTab === "egcse"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground"
-          }`}
-        >
-          <GraduationCap className="w-4 h-4 inline mr-1.5" />
-          EGCSE / SGCSE
-        </button>
+        {([
+          { key: "epc" as const, label: "EPC" },
+          { key: "jc" as const, label: "JC" },
+          { key: "egcse" as const, label: "EGCSE" },
+        ]).map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => { setActiveTab(tab.key); setExpandedSubject(null); }}
+            className={`flex-1 py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
+              activeTab === tab.key
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground"
+            }`}
+          >
+            <GraduationCap className="w-4 h-4 inline mr-1.5" />
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Search */}
