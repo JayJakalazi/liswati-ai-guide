@@ -19,6 +19,19 @@ const epcSubjects: Subject[] = [
   { name: "Agriculture", icon: <Sprout className="w-5 h-5" />, topics: ["Kulima Kudla", "Kufuya Tinkhomo", "Inhlanyelo neMbewu", "Umhlaba neMvula"] },
 ];
 
+const jcSubjects: Subject[] = [
+  { name: "SiSwati", icon: <Languages className="w-5 h-5" />, topics: ["Kuhlaziya inkondlo", "Kubhala indzaba", "Luhlelo lwelulwimi", "Kuhumusha", "Kufundzisisa kucondza"] },
+  { name: "English Language", icon: <Globe className="w-5 h-5" />, topics: ["Comprehension", "Composition", "Grammar & Usage", "Summary Writing", "Letter Writing"] },
+  { name: "Mathematics", icon: <Calculator className="w-5 h-5" />, topics: ["Algebra", "Geometry", "Statistics", "Number & Operations", "Measurement", "Ratio & Proportion"] },
+  { name: "Science", icon: <FlaskConical className="w-5 h-5" />, topics: ["Biology Basics", "Chemistry Basics", "Physics Basics", "Scientific Investigation"] },
+  { name: "Geography", icon: <MapPin className="w-5 h-5" />, topics: ["Map Reading", "Weather & Climate", "Population", "Settlement", "Physical Landscape"] },
+  { name: "History", icon: <Landmark className="w-5 h-5" />, topics: ["Eswatini Pre-colonial History", "Colonial Period", "Southern Africa", "World History Basics"] },
+  { name: "Agriculture", icon: <Sprout className="w-5 h-5" />, topics: ["Crop Farming", "Animal Farming", "Soil & Water", "Farm Tools & Equipment"] },
+  { name: "Commerce", icon: <FileText className="w-5 h-5" />, topics: ["Business Basics", "Banking", "Trade", "Consumer Education"] },
+  { name: "Home Economics", icon: <BookOpen className="w-5 h-5" />, topics: ["Nutrition", "Food Preparation", "Textiles", "Home Management"] },
+  { name: "Religious Education", icon: <BookOpen className="w-5 h-5" />, topics: ["Christianity", "African Traditional Religion", "Moral Education", "Ethics"] },
+];
+
 const egcseSubjects: Subject[] = [
   { name: "SiSwati", icon: <Languages className="w-5 h-5" />, topics: ["Umlandvo weSiSwati", "Inchubo yekubhala", "Tinkondlo", "Kuhumusha lokujulile", "Umsebenti welulwimi"] },
   { name: "English Language", icon: <Globe className="w-5 h-5" />, topics: ["Directed Writing", "Composition", "Comprehension", "Summary", "Language Usage"] },
