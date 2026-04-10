@@ -41,7 +41,9 @@ const ChatPage = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [playingMessageId, setPlayingMessageId] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const { isRecording, isPlayingAudio, startListening, stopListening, playTTS, stopAudio } = useVoiceChat();
 
   const refreshConversations = useCallback(() => {
     setConversations(getConversations());
