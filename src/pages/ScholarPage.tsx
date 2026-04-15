@@ -372,13 +372,26 @@ const pastPaperLinks: PastPaperLink[] = [
   },
 ];
 
+type JCForm = "All" | "Form 1" | "Form 2" | "Form 3";
+
 const ScholarPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse">("epc");
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [jcForm, setJcForm] = useState<JCForm>("All");
 
-  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjects : egcseSubjects;
+  // Convert JC subjects based on selected form
+  const jcSubjectsFiltered: Subject[] = useMemo(() => {
+    return jcSubjectsWithForms.map((s) => {
+      const topics = jcForm === "All"
+        ? [...new Set([...s.topicsByForm["Form 1"], ...s.topicsByForm["Form 2"], ...s.topicsByForm["Form 3"]])]
+        : s.topicsByForm[jcForm];
+      return { name: s.name, icon: s.icon, topics };
+    });
+  }, [jcForm]);
+
+  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjectsFiltered : egcseSubjects;
   const filteredPaperLinks = useMemo(() => {
     const q = searchQuery.toLowerCase();
     return pastPaperLinks
