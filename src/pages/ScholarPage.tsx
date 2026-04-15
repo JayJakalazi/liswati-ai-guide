@@ -30,6 +30,9 @@ const jcSubjects: Subject[] = [
   { name: "Commerce", icon: <FileText className="w-5 h-5" />, topics: ["Business Basics", "Banking", "Trade", "Consumer Education"] },
   { name: "Home Economics", icon: <BookOpen className="w-5 h-5" />, topics: ["Nutrition", "Food Preparation", "Textiles", "Home Management"] },
   { name: "Religious Education", icon: <BookOpen className="w-5 h-5" />, topics: ["Christianity", "African Traditional Religion", "Moral Education", "Ethics"] },
+  { name: "French", icon: <BookOpenText className="w-5 h-5" />, topics: ["Grammaire", "Compréhension", "Expression Écrite", "Vocabulaire", "Conversation"] },
+  { name: "Design & Technology", icon: <Wrench className="w-5 h-5" />, topics: ["Materials & Components", "Design Process", "Technical Drawing", "Woodwork", "Metalwork"] },
+  { name: "Physical Education", icon: <Dumbbell className="w-5 h-5" />, topics: ["Athletics", "Ball Games", "Health & Fitness", "Gymnastics", "Swimming"] },
 ];
 
 const egcseSubjects: Subject[] = [
