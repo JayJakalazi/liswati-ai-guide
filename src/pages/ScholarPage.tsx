@@ -9,6 +9,16 @@ interface Subject {
   topics: string[];
 }
 
+interface JCSubject {
+  name: string;
+  icon: React.ReactNode;
+  topicsByForm: {
+    "Form 1": string[];
+    "Form 2": string[];
+    "Form 3": string[];
+  };
+}
+
 const epcSubjects: Subject[] = [
   { name: "SiSwati", icon: <Languages className="w-5 h-5" />, topics: ["Kubhala indzaba", "Kuhlaziya inkondlo", "Sivakatfo", "Kuhumusha", "Bala ucondze"] },
   { name: "English", icon: <Globe className="w-5 h-5" />, topics: ["Comprehension", "Creative Writing", "Grammar & Vocabulary", "Summary Writing"] },
@@ -19,20 +29,72 @@ const epcSubjects: Subject[] = [
   { name: "Agriculture", icon: <Sprout className="w-5 h-5" />, topics: ["Kulima Kudla", "Kufuya Tinkhomo", "Inhlanyelo neMbewu", "Umhlaba neMvula"] },
 ];
 
-const jcSubjects: Subject[] = [
-  { name: "SiSwati", icon: <Languages className="w-5 h-5" />, topics: ["Kuhlaziya inkondlo", "Kubhala indzaba", "Luhlelo lwelulwimi", "Kuhumusha", "Kufundzisisa kucondza"] },
-  { name: "English Language", icon: <Globe className="w-5 h-5" />, topics: ["Comprehension", "Composition", "Grammar & Usage", "Summary Writing", "Letter Writing"] },
-  { name: "Mathematics", icon: <Calculator className="w-5 h-5" />, topics: ["Algebra", "Geometry", "Statistics", "Number & Operations", "Measurement", "Ratio & Proportion"] },
-  { name: "Science", icon: <FlaskConical className="w-5 h-5" />, topics: ["Biology Basics", "Chemistry Basics", "Physics Basics", "Scientific Investigation"] },
-  { name: "Geography", icon: <MapPin className="w-5 h-5" />, topics: ["Map Reading", "Weather & Climate", "Population", "Settlement", "Physical Landscape"] },
-  { name: "History", icon: <Landmark className="w-5 h-5" />, topics: ["Eswatini Pre-colonial History", "Colonial Period", "Southern Africa", "World History Basics"] },
-  { name: "Agriculture", icon: <Sprout className="w-5 h-5" />, topics: ["Crop Farming", "Animal Farming", "Soil & Water", "Farm Tools & Equipment"] },
-  { name: "Commerce", icon: <FileText className="w-5 h-5" />, topics: ["Business Basics", "Banking", "Trade", "Consumer Education"] },
-  { name: "Home Economics", icon: <BookOpen className="w-5 h-5" />, topics: ["Nutrition", "Food Preparation", "Textiles", "Home Management"] },
-  { name: "Religious Education", icon: <BookOpen className="w-5 h-5" />, topics: ["Christianity", "African Traditional Religion", "Moral Education", "Ethics"] },
-  { name: "French", icon: <BookOpenText className="w-5 h-5" />, topics: ["Grammaire", "Compréhension", "Expression Écrite", "Vocabulaire", "Conversation"] },
-  { name: "Design & Technology", icon: <Wrench className="w-5 h-5" />, topics: ["Materials & Components", "Design Process", "Technical Drawing", "Woodwork", "Metalwork"] },
-  { name: "Physical Education", icon: <Dumbbell className="w-5 h-5" />, topics: ["Athletics", "Ball Games", "Health & Fitness", "Gymnastics", "Swimming"] },
+const jcSubjectsWithForms: JCSubject[] = [
+  { name: "SiSwati", icon: <Languages className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Kubhala indzaba", "Luhlelo lwelulwimi", "Kufundzisisa"],
+    "Form 2": ["Kuhlaziya inkondlo", "Kuhumusha", "Kubhala incwadzi"],
+    "Form 3": ["Kuhlaziya inkondlo lejulile", "Kubhala indzaba", "Luhlelo lwelulwimi", "Kuhumusha", "Kufundzisisa kucondza"],
+  }},
+  { name: "English Language", icon: <Globe className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Reading Comprehension", "Basic Grammar", "Vocabulary Building"],
+    "Form 2": ["Composition Writing", "Summary Skills", "Grammar & Usage"],
+    "Form 3": ["Comprehension", "Composition", "Grammar & Usage", "Summary Writing", "Letter Writing"],
+  }},
+  { name: "Mathematics", icon: <Calculator className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Number & Operations", "Basic Algebra", "Geometry Basics", "Measurement"],
+    "Form 2": ["Algebra", "Geometry", "Statistics", "Ratio & Proportion"],
+    "Form 3": ["Algebra", "Geometry", "Statistics", "Number & Operations", "Measurement", "Ratio & Proportion"],
+  }},
+  { name: "Science", icon: <FlaskConical className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Introduction to Science", "Living Things", "Matter"],
+    "Form 2": ["Biology Basics", "Chemistry Basics", "Energy"],
+    "Form 3": ["Biology Basics", "Chemistry Basics", "Physics Basics", "Scientific Investigation"],
+  }},
+  { name: "Geography", icon: <MapPin className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Map Reading Basics", "Weather", "Our Environment"],
+    "Form 2": ["Climate", "Population", "Physical Landscape"],
+    "Form 3": ["Map Reading", "Weather & Climate", "Population", "Settlement", "Physical Landscape"],
+  }},
+  { name: "History", icon: <Landmark className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Early African Societies", "Eswatini Origins"],
+    "Form 2": ["Colonial Period", "Southern Africa"],
+    "Form 3": ["Eswatini Pre-colonial History", "Colonial Period", "Southern Africa", "World History Basics"],
+  }},
+  { name: "Agriculture", icon: <Sprout className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Introduction to Farming", "Soil Basics", "Simple Tools"],
+    "Form 2": ["Crop Farming", "Animal Farming", "Water Management"],
+    "Form 3": ["Crop Farming", "Animal Farming", "Soil & Water", "Farm Tools & Equipment"],
+  }},
+  { name: "Commerce", icon: <FileText className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["What is Business?", "Needs & Wants", "Goods & Services"],
+    "Form 2": ["Banking Basics", "Trade", "Money"],
+    "Form 3": ["Business Basics", "Banking", "Trade", "Consumer Education"],
+  }},
+  { name: "Home Economics", icon: <BookOpen className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Basic Nutrition", "Kitchen Safety", "Simple Meals"],
+    "Form 2": ["Food Preparation", "Textiles Basics", "Hygiene"],
+    "Form 3": ["Nutrition", "Food Preparation", "Textiles", "Home Management"],
+  }},
+  { name: "Religious Education", icon: <BookOpen className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Introduction to Religion", "Moral Values"],
+    "Form 2": ["Christianity", "African Traditional Religion"],
+    "Form 3": ["Christianity", "African Traditional Religion", "Moral Education", "Ethics"],
+  }},
+  { name: "French", icon: <BookOpenText className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Salutations", "La Famille", "Les Nombres"],
+    "Form 2": ["Vocabulaire", "Grammaire de base", "Expression Orale"],
+    "Form 3": ["Grammaire", "Compréhension", "Expression Écrite", "Vocabulaire", "Conversation"],
+  }},
+  { name: "Design & Technology", icon: <Wrench className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Basic Materials", "Simple Design", "Safety in Workshop"],
+    "Form 2": ["Technical Drawing", "Woodwork Basics", "Design Process"],
+    "Form 3": ["Materials & Components", "Design Process", "Technical Drawing", "Woodwork", "Metalwork"],
+  }},
+  { name: "Physical Education", icon: <Dumbbell className="w-5 h-5" />, topicsByForm: {
+    "Form 1": ["Basic Athletics", "Team Sports", "Warm-up & Stretching"],
+    "Form 2": ["Ball Games", "Gymnastics Basics", "Health & Fitness"],
+    "Form 3": ["Athletics", "Ball Games", "Health & Fitness", "Gymnastics", "Swimming"],
+  }},
 ];
 
 const egcseSubjects: Subject[] = [
