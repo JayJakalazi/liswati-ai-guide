@@ -448,7 +448,24 @@ const ScholarPage = () => {
         ))}
       </div>
 
-      {/* Search */}
+      {/* JC Form Filter */}
+      {activeTab === "jc" && (
+        <div className="flex gap-1.5 px-5 mb-4">
+          {(["All", "Form 1", "Form 2", "Form 3"] as JCForm[]).map((form) => (
+            <button
+              key={form}
+              onClick={() => { setJcForm(form); setExpandedSubject(null); }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-display font-semibold transition-colors ${
+                jcForm === form
+                  ? "bg-primary/15 text-primary border border-primary/30"
+                  : "bg-muted/50 text-muted-foreground border border-transparent"
+              }`}
+            >
+              {form === "All" ? "Tonkhe · All" : form}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="px-5 mb-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
