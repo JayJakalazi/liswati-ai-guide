@@ -435,7 +435,7 @@ const ScholarPage = () => {
         ]).map((tab) => (
           <button
             key={tab.key}
-            onClick={() => { setActiveTab(tab.key); setExpandedSubject(null); }}
+            onClick={() => { setActiveTab(tab.key); setExpandedSubject(null); setJcForm("All"); }}
             className={`flex-1 py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
               activeTab === tab.key
                 ? "bg-primary text-primary-foreground"
