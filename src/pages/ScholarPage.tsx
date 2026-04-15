@@ -290,6 +290,24 @@ const pastPaperLinks: PastPaperLink[] = [
     description: "JC Commerce past papers — Form 3",
     level: "jc",
   },
+  {
+    name: "JC French Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=43&programme=JC",
+    description: "JC French past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Design & Technology Papers",
+    url: "https://www.examscouncil.org.sz/programmes/subject.php?id=41&programme=JC",
+    description: "JC Design & Technology past papers — Form 3",
+    level: "jc",
+  },
+  {
+    name: "JC Physical Education Papers",
+    url: "https://www.khanyisa.online/educare/exampapers/form3/",
+    description: "JC Physical Education past papers — Form 3",
+    level: "jc",
+  },
 ];
 
 const ScholarPage = () => {
