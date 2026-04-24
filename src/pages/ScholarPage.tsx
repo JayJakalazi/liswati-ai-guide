@@ -519,7 +519,12 @@ const ScholarPage = () => {
                         {subject.topics.map((topic) => (
                           <button
                             key={topic}
-                            onClick={() => navigate(`/?q=${encodeURIComponent(`Ngifundzise nge ${topic} (${subject.name})`)}`)}
+                            onClick={() => {
+                              const ctx = activeTab === "jc" && jcForm !== "All"
+                                ? `${subject.name} – ${jcForm}`
+                                : subject.name;
+                              navigate(`/?q=${encodeURIComponent(`Ngifundzise nge ${topic} (${ctx})`)}`);
+                            }}
                             className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/50 hover:bg-muted text-left transition-colors"
                           >
                             <FileText className="w-3.5 h-3.5 text-primary shrink-0" />
