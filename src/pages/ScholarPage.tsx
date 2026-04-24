@@ -525,10 +525,13 @@ const ScholarPage = () => {
                                 ? `${subject.name} – ${jcForm}`
                                 : subject.name;
                               const prompt = `Ngifundzise nge ${topic} (${ctx})`;
-                              if (activeTab === "jc") {
-                                toast("Sengikutfumelela kuchat", { description: prompt });
-                              }
+                              const isJc = activeTab === "jc";
                               navigate(`/?q=${encodeURIComponent(prompt)}`);
+                              if (isJc) {
+                                setTimeout(() => {
+                                  toast("Sengikutfumelele kuchat", { description: prompt, duration: 5000 });
+                                }, 0);
+                              }
                             }}
                             className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/50 hover:bg-muted text-left transition-colors"
                           >
