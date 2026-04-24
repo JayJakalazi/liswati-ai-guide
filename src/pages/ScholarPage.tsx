@@ -2,6 +2,7 @@ import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskC
 import { useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 
 interface Subject {
   name: string;
