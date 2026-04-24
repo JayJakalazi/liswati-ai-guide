@@ -523,7 +523,11 @@ const ScholarPage = () => {
                               const ctx = activeTab === "jc" && jcForm !== "All"
                                 ? `${subject.name} – ${jcForm}`
                                 : subject.name;
-                              navigate(`/?q=${encodeURIComponent(`Ngifundzise nge ${topic} (${ctx})`)}`);
+                              const prompt = `Ngifundzise nge ${topic} (${ctx})`;
+                              if (activeTab === "jc") {
+                                toast("Sengikutfumelela kuchat", { description: prompt });
+                              }
+                              navigate(`/?q=${encodeURIComponent(prompt)}`);
                             }}
                             className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/50 hover:bg-muted text-left transition-colors"
                           >
