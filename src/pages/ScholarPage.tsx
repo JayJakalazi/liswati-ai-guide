@@ -381,6 +381,7 @@ const ScholarPage = () => {
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [jcForm, setJcForm] = useState<JCForm>("All");
+  const [debugMode, setDebugMode] = useState(false);
 
   // Convert JC subjects based on selected form
   const jcSubjectsFiltered: Subject[] = useMemo(() => {
