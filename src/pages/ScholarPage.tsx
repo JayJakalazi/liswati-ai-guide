@@ -466,6 +466,18 @@ const ScholarPage = () => {
               {form === "All" ? "Tonkhe · All" : form}
             </button>
           ))}
+          <button
+            onClick={() => setDebugMode((d) => !d)}
+            className={`ml-auto px-3 py-1.5 rounded-lg text-xs font-display font-semibold transition-colors ${
+              debugMode
+                ? "bg-accent/20 text-accent-foreground border border-accent/40"
+                : "bg-muted/50 text-muted-foreground border border-transparent"
+            }`}
+            aria-pressed={debugMode}
+            title="Debug: show computed prompt"
+          >
+            {debugMode ? "Debug · ON" : "Debug · OFF"}
+          </button>
         </div>
       )}
       <div className="px-5 mb-4">
