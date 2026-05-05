@@ -539,10 +539,28 @@ const ScholarPage = () => {
                                 : subject.name;
                               const prompt = `Ngifundzise nge ${topic} (${ctx})`;
                               const isJc = activeTab === "jc";
+                              if (debugMode) {
+                                console.log("[BAFO Scholar debug]", {
+                                  activeTab,
+                                  jcForm,
+                                  subject: subject.name,
+                                  topic,
+                                  ctx,
+                                  prompt,
+                                });
+                              }
                               navigate(`/?q=${encodeURIComponent(prompt)}`);
-                              if (isJc) {
+                              if (isJc || debugMode) {
                                 setTimeout(() => {
-                                  toast("Sengikutfumelele kuchat", { description: prompt, duration: 5000 });
+                                  toast(
+                                    debugMode ? "Debug · computed prompt" : "Sengikutfumelele kuchat",
+                                    {
+                                      description: debugMode
+                                        ? `tab=${activeTab} · form=${jcForm}\n${prompt}`
+                                        : prompt,
+                                      duration: 5000,
+                                    }
+                                  );
                                 }, 0);
                               }
                             }}
