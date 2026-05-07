@@ -111,6 +111,24 @@ const egcseSubjects: Subject[] = [
   { name: "Art & Design", icon: <Palette className="w-5 h-5" />, topics: ["Drawing & Painting", "Eswatini Traditional Art", "Design Principles", "Mixed Media"] },
 ];
 
+const iebSubjects: Subject[] = [
+  { name: "English Home Language", icon: <Globe className="w-5 h-5" />, topics: ["Comprehension", "Summary", "Language Structures", "Literature (Poetry, Drama, Novel)", "Creative & Transactional Writing"] },
+  { name: "Afrikaans FAL", icon: <Languages className="w-5 h-5" />, topics: ["Begrip", "Opsomming", "Taalstrukture", "Letterkunde", "Skryfwerk"] },
+  { name: "Mathematics", icon: <Calculator className="w-5 h-5" />, topics: ["Algebra & Functions", "Calculus", "Trigonometry", "Analytical Geometry", "Statistics & Probability", "Euclidean Geometry"] },
+  { name: "Mathematical Literacy", icon: <Calculator className="w-5 h-5" />, topics: ["Numbers & Calculations", "Patterns & Relationships", "Measurement", "Maps & Plans", "Data Handling", "Probability"] },
+  { name: "Physical Sciences", icon: <FlaskConical className="w-5 h-5" />, topics: ["Mechanics", "Waves, Sound & Light", "Electricity & Magnetism", "Matter & Materials", "Chemical Change", "Organic Chemistry"] },
+  { name: "Life Sciences", icon: <FlaskConical className="w-5 h-5" />, topics: ["Cells & Molecules", "Life Processes in Plants & Animals", "Environmental Studies", "Diversity & Evolution", "Human Physiology", "Genetics"] },
+  { name: "Geography", icon: <MapPin className="w-5 h-5" />, topics: ["Climatology", "Geomorphology", "Settlement Geography", "Economic Geography", "Map Work & GIS"] },
+  { name: "History", icon: <Landmark className="w-5 h-5" />, topics: ["Cold War", "Independent Africa", "Civil Society Protests", "Apartheid SA", "End of Apartheid", "Globalisation"] },
+  { name: "Business Studies", icon: <FileText className="w-5 h-5" />, topics: ["Business Environments", "Business Ventures", "Business Roles", "Business Operations"] },
+  { name: "Accounting", icon: <FileText className="w-5 h-5" />, topics: ["Financial Accounting", "Managerial Accounting", "Managing Resources", "Companies & Reporting"] },
+  { name: "Economics", icon: <FileText className="w-5 h-5" />, topics: ["Macroeconomics", "Microeconomics", "Economic Pursuits", "Contemporary Economic Issues"] },
+  { name: "Life Orientation", icon: <BookOpen className="w-5 h-5" />, topics: ["Development of the Self", "Social & Environmental Responsibility", "Democracy & Human Rights", "Careers & Career Choices", "Physical Education"] },
+  { name: "Information Technology", icon: <Monitor className="w-5 h-5" />, topics: ["Programming (Delphi/Java)", "Databases (SQL)", "Hardware & System Software", "Networks & Internet", "Social Implications"] },
+  { name: "Visual Arts", icon: <Palette className="w-5 h-5" />, topics: ["Practical (Sourcebook & Artwork)", "Visual Culture Studies", "Art History", "Theory of Art"] },
+  { name: "Dramatic Arts", icon: <BookOpenText className="w-5 h-5" />, topics: ["Performance", "South African Theatre", "World Theatre", "Theatre History"] },
+];
+
 interface PastPaperLink {
   name: string;
   url: string;
