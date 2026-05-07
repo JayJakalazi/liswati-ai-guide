@@ -424,7 +424,7 @@ const ScholarPage = () => {
     });
   }, [jcForm]);
 
-  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjectsFiltered : egcseSubjects;
+  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjectsFiltered : activeTab === "ieb" ? iebSubjects : egcseSubjects;
   const filteredPaperLinks = useMemo(() => {
     const q = searchQuery.toLowerCase();
     return pastPaperLinks
