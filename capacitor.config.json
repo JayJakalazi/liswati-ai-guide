@@ -1,0 +1,9 @@
+{
+  "appId": "app.lovable.059b75a053844295b47e53bc600c425a",
+  "appName": "liswati-ai-guide",
+  "webDir": "dist",
+  "server": {
+    "url": "https://059b75a0-5384-4295-b47e-53bc600c425a.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  }
+}
