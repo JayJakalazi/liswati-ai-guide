@@ -133,9 +133,21 @@ interface PastPaperLink {
   name: string;
   url: string;
   description: string;
-  level: "epc" | "jc" | "egcse" | "all";
+  level: "epc" | "jc" | "egcse" | "ieb" | "all";
 }
 
+const iebPaperLinks: PastPaperLink[] = [
+  { name: "IEB Official Past Papers", url: "https://www.ieb.co.za/pages/past-papers", description: "Independent Examinations Board – official NSC past papers", level: "ieb" },
+  { name: "IEB Exam Papers (Advantage Learn)", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC past papers archive – all subjects", level: "ieb" },
+  { name: "IEB Mathematics Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Mathematics papers & memos", level: "ieb" },
+  { name: "IEB Physical Sciences Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Physical Sciences papers & memos", level: "ieb" },
+  { name: "IEB Life Sciences Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Life Sciences papers & memos", level: "ieb" },
+  { name: "IEB English HL Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC English Home Language papers & memos", level: "ieb" },
+  { name: "IEB Accounting Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Accounting papers & memos", level: "ieb" },
+  { name: "IEB Business Studies Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Business Studies papers & memos", level: "ieb" },
+  { name: "IEB Geography Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Geography papers & memos", level: "ieb" },
+  { name: "IEB History Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC History papers & memos", level: "ieb" },
+];
 const pastPaperLinks: PastPaperLink[] = [
   {
     name: "Examinations Council of Eswatini",
