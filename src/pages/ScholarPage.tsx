@@ -465,6 +465,7 @@ const ScholarPage = () => {
           { key: "epc" as const, label: "EPC" },
           { key: "jc" as const, label: "JC" },
           { key: "egcse" as const, label: "EGCSE" },
+          { key: "ieb" as const, label: "IEB" },
         ]).map((tab) => (
           <button
             key={tab.key}
