@@ -401,13 +401,14 @@ const pastPaperLinks: PastPaperLink[] = [
     description: "JC Physical Education past papers — Form 3",
     level: "jc",
   },
+  ...iebPaperLinks,
 ];
 
 type JCForm = "All" | "Form 1" | "Form 2" | "Form 3";
 
 const ScholarPage = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse">("epc");
+  const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse" | "ieb">("epc");
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [jcForm, setJcForm] = useState<JCForm>("All");
