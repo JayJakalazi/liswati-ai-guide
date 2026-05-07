@@ -111,13 +111,43 @@ const egcseSubjects: Subject[] = [
   { name: "Art & Design", icon: <Palette className="w-5 h-5" />, topics: ["Drawing & Painting", "Eswatini Traditional Art", "Design Principles", "Mixed Media"] },
 ];
 
+const iebSubjects: Subject[] = [
+  { name: "English Home Language", icon: <Globe className="w-5 h-5" />, topics: ["Comprehension", "Summary", "Language Structures", "Literature (Poetry, Drama, Novel)", "Creative & Transactional Writing"] },
+  { name: "Afrikaans FAL", icon: <Languages className="w-5 h-5" />, topics: ["Begrip", "Opsomming", "Taalstrukture", "Letterkunde", "Skryfwerk"] },
+  { name: "Mathematics", icon: <Calculator className="w-5 h-5" />, topics: ["Algebra & Functions", "Calculus", "Trigonometry", "Analytical Geometry", "Statistics & Probability", "Euclidean Geometry"] },
+  { name: "Mathematical Literacy", icon: <Calculator className="w-5 h-5" />, topics: ["Numbers & Calculations", "Patterns & Relationships", "Measurement", "Maps & Plans", "Data Handling", "Probability"] },
+  { name: "Physical Sciences", icon: <FlaskConical className="w-5 h-5" />, topics: ["Mechanics", "Waves, Sound & Light", "Electricity & Magnetism", "Matter & Materials", "Chemical Change", "Organic Chemistry"] },
+  { name: "Life Sciences", icon: <FlaskConical className="w-5 h-5" />, topics: ["Cells & Molecules", "Life Processes in Plants & Animals", "Environmental Studies", "Diversity & Evolution", "Human Physiology", "Genetics"] },
+  { name: "Geography", icon: <MapPin className="w-5 h-5" />, topics: ["Climatology", "Geomorphology", "Settlement Geography", "Economic Geography", "Map Work & GIS"] },
+  { name: "History", icon: <Landmark className="w-5 h-5" />, topics: ["Cold War", "Independent Africa", "Civil Society Protests", "Apartheid SA", "End of Apartheid", "Globalisation"] },
+  { name: "Business Studies", icon: <FileText className="w-5 h-5" />, topics: ["Business Environments", "Business Ventures", "Business Roles", "Business Operations"] },
+  { name: "Accounting", icon: <FileText className="w-5 h-5" />, topics: ["Financial Accounting", "Managerial Accounting", "Managing Resources", "Companies & Reporting"] },
+  { name: "Economics", icon: <FileText className="w-5 h-5" />, topics: ["Macroeconomics", "Microeconomics", "Economic Pursuits", "Contemporary Economic Issues"] },
+  { name: "Life Orientation", icon: <BookOpen className="w-5 h-5" />, topics: ["Development of the Self", "Social & Environmental Responsibility", "Democracy & Human Rights", "Careers & Career Choices", "Physical Education"] },
+  { name: "Information Technology", icon: <Monitor className="w-5 h-5" />, topics: ["Programming (Delphi/Java)", "Databases (SQL)", "Hardware & System Software", "Networks & Internet", "Social Implications"] },
+  { name: "Visual Arts", icon: <Palette className="w-5 h-5" />, topics: ["Practical (Sourcebook & Artwork)", "Visual Culture Studies", "Art History", "Theory of Art"] },
+  { name: "Dramatic Arts", icon: <BookOpenText className="w-5 h-5" />, topics: ["Performance", "South African Theatre", "World Theatre", "Theatre History"] },
+];
+
 interface PastPaperLink {
   name: string;
   url: string;
   description: string;
-  level: "epc" | "jc" | "egcse" | "all";
+  level: "epc" | "jc" | "egcse" | "ieb" | "all";
 }
 
+const iebPaperLinks: PastPaperLink[] = [
+  { name: "IEB Official Past Papers", url: "https://www.ieb.co.za/pages/past-papers", description: "Independent Examinations Board – official NSC past papers", level: "ieb" },
+  { name: "IEB Exam Papers (Advantage Learn)", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC past papers archive – all subjects", level: "ieb" },
+  { name: "IEB Mathematics Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Mathematics papers & memos", level: "ieb" },
+  { name: "IEB Physical Sciences Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Physical Sciences papers & memos", level: "ieb" },
+  { name: "IEB Life Sciences Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Life Sciences papers & memos", level: "ieb" },
+  { name: "IEB English HL Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC English Home Language papers & memos", level: "ieb" },
+  { name: "IEB Accounting Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Accounting papers & memos", level: "ieb" },
+  { name: "IEB Business Studies Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Business Studies papers & memos", level: "ieb" },
+  { name: "IEB Geography Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC Geography papers & memos", level: "ieb" },
+  { name: "IEB History Papers", url: "https://advantagelearn.com/courses/ieb-past-exam-papers/", description: "IEB NSC History papers & memos", level: "ieb" },
+];
 const pastPaperLinks: PastPaperLink[] = [
   {
     name: "Examinations Council of Eswatini",
@@ -371,13 +401,14 @@ const pastPaperLinks: PastPaperLink[] = [
     description: "JC Physical Education past papers — Form 3",
     level: "jc",
   },
+  ...iebPaperLinks,
 ];
 
 type JCForm = "All" | "Form 1" | "Form 2" | "Form 3";
 
 const ScholarPage = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse">("epc");
+  const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse" | "ieb">("epc");
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [jcForm, setJcForm] = useState<JCForm>("All");
@@ -393,7 +424,7 @@ const ScholarPage = () => {
     });
   }, [jcForm]);
 
-  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjectsFiltered : egcseSubjects;
+  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjectsFiltered : activeTab === "ieb" ? iebSubjects : egcseSubjects;
   const filteredPaperLinks = useMemo(() => {
     const q = searchQuery.toLowerCase();
     return pastPaperLinks
@@ -434,6 +465,7 @@ const ScholarPage = () => {
           { key: "epc" as const, label: "EPC" },
           { key: "jc" as const, label: "JC" },
           { key: "egcse" as const, label: "EGCSE" },
+          { key: "ieb" as const, label: "IEB" },
         ]).map((tab) => (
           <button
             key={tab.key}
