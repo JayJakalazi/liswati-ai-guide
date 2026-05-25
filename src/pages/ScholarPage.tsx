@@ -589,23 +589,24 @@ const ScholarPage = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 px-5 mb-4">
+      <div className="flex gap-2 px-5 mb-4 overflow-x-auto">
         {([
-          { key: "epc" as const, label: "EPC" },
-          { key: "jc" as const, label: "JC" },
-          { key: "egcse" as const, label: "EGCSE" },
-          { key: "ieb" as const, label: "IEB" },
+          { key: "epc" as const, label: "EPC", icon: <GraduationCap className="w-4 h-4 inline mr-1.5" /> },
+          { key: "jc" as const, label: "JC", icon: <GraduationCap className="w-4 h-4 inline mr-1.5" /> },
+          { key: "egcse" as const, label: "EGCSE", icon: <GraduationCap className="w-4 h-4 inline mr-1.5" /> },
+          { key: "ieb" as const, label: "IEB", icon: <GraduationCap className="w-4 h-4 inline mr-1.5" /> },
+          { key: "health" as const, label: "Health", icon: <HeartPulse className="w-4 h-4 inline mr-1.5" /> },
         ]).map((tab) => (
           <button
             key={tab.key}
-            onClick={() => { setActiveTab(tab.key); setExpandedSubject(null); setJcForm("All"); }}
-            className={`flex-1 py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
+            onClick={() => { setActiveTab(tab.key); setExpandedSubject(null); setJcForm("All"); setSearchQuery(""); }}
+            className={`flex-1 min-w-[72px] py-2.5 rounded-xl text-sm font-display font-semibold transition-colors ${
               activeTab === tab.key
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground"
             }`}
           >
-            <GraduationCap className="w-4 h-4 inline mr-1.5" />
+            {tab.icon}
             {tab.label}
           </button>
         ))}
