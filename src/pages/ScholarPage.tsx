@@ -692,15 +692,21 @@ const ScholarPage = () => {
                       className="overflow-hidden"
                     >
                       <div className="px-4 pb-4 space-y-2">
-                        {subject.topics.map((topic) => (
+                        {subject.topics.map((topic) => {
+                          const healthInfo = activeTab === "health"
+                            ? healthCategories.find((c) => c.name === subject.name)?.conditions.find((x) => x.name === topic)
+                            : undefined;
+                          return (
                           <button
                             key={topic}
                             onClick={() => {
                               const ctx = activeTab === "jc" && jcForm !== "All"
                                 ? `${subject.name} – ${jcForm}`
                                 : subject.name;
-                              const prompt = `Ngifundzise nge ${topic} (${ctx})`;
-                              const isJc = activeTab === "jc";
+                              const prompt = activeTab === "health"
+                                ? `Ngichazele nge ${topic} (${subject.name}) eSwatini: timphawu, lokungentiwa, kanye netindzawo lapho ngingatfola lusito noma kwelashwa.`
+                                : `Ngifundzise nge ${topic} (${ctx})`;
+                              const showToast = activeTab === "jc" || activeTab === "health" || debugMode;
                               if (debugMode) {
                                 console.log("[BAFO Scholar debug]", {
                                   activeTab,
@@ -712,7 +718,7 @@ const ScholarPage = () => {
                                 });
                               }
                               navigate(`/?q=${encodeURIComponent(prompt)}`);
-                              if (isJc || debugMode) {
+                              if (showToast) {
                                 setTimeout(() => {
                                   toast(
                                     debugMode ? "Debug · computed prompt" : "Sengikutfumelele kuchat",
@@ -726,12 +732,20 @@ const ScholarPage = () => {
                                 }, 0);
                               }
                             }}
-                            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/50 hover:bg-muted text-left transition-colors"
+                            className="w-full flex flex-col items-start gap-1 px-3 py-2 rounded-lg bg-muted/50 hover:bg-muted text-left transition-colors"
                           >
-                            <FileText className="w-3.5 h-3.5 text-primary shrink-0" />
-                            <span className="text-sm font-body text-foreground">{topic}</span>
+                            <div className="flex items-center gap-2">
+                              <FileText className="w-3.5 h-3.5 text-primary shrink-0" />
+                              <span className="text-sm font-body text-foreground">{topic}</span>
+                            </div>
+                            {healthInfo && (
+                              <span className="text-xs text-muted-foreground font-body pl-5">
+                                {healthInfo.where}
+                              </span>
+                            )}
                           </button>
-                        ))}
+                          );
+                        })}
                       </div>
                     </motion.div>
                   )}
