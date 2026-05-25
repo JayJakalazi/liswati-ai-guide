@@ -542,8 +542,19 @@ const ScholarPage = () => {
     });
   }, [jcForm]);
 
-  const allSubjects = activeTab === "epc" ? epcSubjects : activeTab === "jc" ? jcSubjectsFiltered : activeTab === "ieb" ? iebSubjects : egcseSubjects;
+  const healthAsSubjects: Subject[] = useMemo(
+    () => healthCategories.map((c) => ({ name: c.name, icon: c.icon, topics: c.conditions.map((x) => x.name) })),
+    []
+  );
+
+  const allSubjects = activeTab === "epc"
+    ? epcSubjects
+    : activeTab === "jc" ? jcSubjectsFiltered
+    : activeTab === "ieb" ? iebSubjects
+    : activeTab === "health" ? healthAsSubjects
+    : egcseSubjects;
   const filteredPaperLinks = useMemo(() => {
+    if (activeTab === "health") return [];
     const q = searchQuery.toLowerCase();
     return pastPaperLinks
       .filter((link) => link.level === "all" || link.level === activeTab)
