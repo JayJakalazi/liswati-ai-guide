@@ -755,35 +755,70 @@ const ScholarPage = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* Past Papers Section */}
-        <div className="mt-6 pt-4 border-t border-border">
-          <div className="flex items-center gap-2 mb-3">
-            <Download className="w-4 h-4 text-primary" />
-            <h3 className="font-display font-bold text-sm text-foreground">Past Exam Papers</h3>
+        {/* Resources Section */}
+        {activeTab === "health" ? (
+          <div className="mt-6 pt-4 border-t border-border">
+            <div className="flex items-center gap-2 mb-3">
+              <ShieldPlus className="w-4 h-4 text-primary" />
+              <h3 className="font-display font-bold text-sm text-foreground">Health Services & Contacts</h3>
+            </div>
+            <p className="text-xs text-muted-foreground font-body mb-3">
+              ⚠️ Lokunikwa la kungelusito lwekwati kuphela. Kutindzaba telimphilo, vakashela inesi noma dokotela. Lusito loluphutfumako: <strong>977</strong>.
+            </p>
+            <div className="space-y-2">
+              {healthServiceLinks.map((link) => {
+                const Wrapper: any = link.url ? "a" : "div";
+                const props = link.url
+                  ? { href: link.url, target: "_blank", rel: "noopener noreferrer" }
+                  : {};
+                return (
+                  <Wrapper
+                    key={link.name}
+                    {...props}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      {link.url ? <ExternalLink className="w-4 h-4" /> : <HeartPulse className="w-4 h-4" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                      <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
+                    </div>
+                  </Wrapper>
+                );
+              })}
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground font-body mb-3">
-            Downloadisha emaphepha etiviwo takadzeni kuletisayithi:
-          </p>
-          <div className="space-y-2">
-            {filteredPaperLinks.map((link) => (
-                <a
-                  key={link.url}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
-                >
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                    <ExternalLink className="w-4 h-4" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
-                    <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
-                  </div>
-                </a>
-              ))}
+        ) : (
+          <div className="mt-6 pt-4 border-t border-border">
+            <div className="flex items-center gap-2 mb-3">
+              <Download className="w-4 h-4 text-primary" />
+              <h3 className="font-display font-bold text-sm text-foreground">Past Exam Papers</h3>
+            </div>
+            <p className="text-xs text-muted-foreground font-body mb-3">
+              Downloadisha emaphepha etiviwo takadzeni kuletisayithi:
+            </p>
+            <div className="space-y-2">
+              {filteredPaperLinks.map((link) => (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      <ExternalLink className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                      <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
+                    </div>
+                  </a>
+                ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
