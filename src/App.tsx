@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import PricingPage from "./pages/PricingPage.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
 import ScholarPage from "./pages/ScholarPage.tsx";
+import HealthPage from "./pages/HealthPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/scholar" element={<ScholarPage />} />
+          <Route path="/health" element={<HealthPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

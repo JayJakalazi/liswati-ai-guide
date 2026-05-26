@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download, Search, X, Dumbbell, Wrench, BookOpenText, HeartPulse, Stethoscope, Activity, Brain, Baby, Pill, Syringe, ShieldPlus } from "lucide-react";
+import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download, Search, X, Dumbbell, Wrench, BookOpenText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -129,123 +129,8 @@ const iebSubjects: Subject[] = [
   { name: "Dramatic Arts", icon: <BookOpenText className="w-5 h-5" />, topics: ["Performance", "South African Theatre", "World Theatre", "Theatre History"] },
 ];
 
-interface HealthCategory {
-  name: string;
-  icon: React.ReactNode;
-  conditions: { name: string; where: string }[];
-}
 
-const healthCategories: HealthCategory[] = [
-  {
-    name: "Communicable Diseases",
-    icon: <Syringe className="w-5 h-5" />,
-    conditions: [
-      { name: "HIV / AIDS", where: "Free ART, testing & PrEP at all government clinics, RFM Hospital (Manzini), Mbabane Govt Hospital, Baylor Children's Clinic (Mbabane), MSF Shiselweni, NERCHA partner sites." },
-      { name: "Tuberculosis (TB)", where: "Free diagnosis & treatment at Good Shepherd Hospital (Siteki – national TB referral), all government clinics, MSF Matsapha & Nhlangano TB clinics." },
-      { name: "Malaria", where: "Lubombo & Hhohho lowveld clinics, Good Shepherd Hospital, Hlathikhulu Govt Hospital, National Malaria Programme (MoH)." },
-      { name: "COVID-19 / Flu", where: "Any public clinic, Mbabane Govt Hospital, RFM Hospital, private GPs, Mbabane Clinic, Manzini Clinic." },
-      { name: "STIs (Gonorrhoea, Syphilis, etc.)", where: "Free at all public clinics & STI clinics, Family Life Association of Eswatini (FLAS) – Mbabane, Manzini, Nhlangano, Siteki." },
-      { name: "Hepatitis B & C", where: "Mbabane Govt Hospital, RFM Hospital, private labs (Lancet, Ampath)." },
-      { name: "Cholera / Diarrhoea", where: "Nearest clinic immediately; Mbabane Govt Hospital, RFM Hospital for severe cases." },
-      { name: "Bilharzia (Schistosomiasis)", where: "Public clinics in lowveld areas, Good Shepherd Hospital, Hlane area clinics." },
-    ],
-  },
-  {
-    name: "Non-Communicable Diseases",
-    icon: <HeartPulse className="w-5 h-5" />,
-    conditions: [
-      { name: "Hypertension (High BP)", where: "All public clinics (free screening), Mbabane Govt Hospital NCD clinic, RFM Hospital, Mbabane Clinic." },
-      { name: "Diabetes (Type 1 & 2)", where: "Mbabane Govt Hospital diabetic clinic, RFM Hospital, Good Shepherd, Hlathikhulu; Eswatini Diabetes Association." },
-      { name: "Heart Disease & Stroke", where: "Mbabane Govt Hospital, Mbabane Clinic; complex cases referred to South Africa (Pretoria/Johannesburg)." },
-      { name: "Asthma & COPD", where: "All public clinics, Mbabane Govt Hospital respiratory clinic, private GPs." },
-      { name: "Cancer (screening & care)", where: "Mbabane Govt Hospital oncology clinic, Cancer Association of Eswatini (Mbabane); advanced treatment usually referred to SA." },
-      { name: "Kidney Disease", where: "Mbabane Govt Hospital, RFM Hospital; dialysis at private centres & referral to SA." },
-    ],
-  },
-  {
-    name: "Maternal & Child Health",
-    icon: <Baby className="w-5 h-5" />,
-    conditions: [
-      { name: "Antenatal Care (Pregnancy)", where: "Free at all public clinics, RFM Hospital, Mbabane Govt Hospital, Good Shepherd, Hlathikhulu, Pigg's Peak Hospital." },
-      { name: "Childhood Immunisations (EPI)", where: "Free at every public clinic – follow EPI schedule from birth." },
-      { name: "Child Malnutrition", where: "Public clinics, Baylor Children's Clinic, World Vision & UNICEF supported sites." },
-      { name: "Childhood Illnesses (fever, diarrhoea)", where: "Nearest clinic, Mbabane Govt Hospital paediatric ward, RFM Paediatrics." },
-      { name: "Family Planning & Contraception", where: "Free at public clinics, FLAS clinics (Mbabane, Manzini, Nhlangano, Siteki), PSI Lusweti outreach." },
-    ],
-  },
-  {
-    name: "Mental Health",
-    icon: <Brain className="w-5 h-5" />,
-    conditions: [
-      { name: "Depression & Anxiety", where: "National Psychiatric Referral Hospital (Manzini), Mbabane Govt Hospital mental health unit, SWAGAA counselling." },
-      { name: "Substance Abuse (alcohol/drugs)", where: "Psychiatric Hospital Manzini, Mbabane Clinic, Salvation Army programmes." },
-      { name: "Stress & Burnout", where: "Private counsellors in Mbabane/Manzini, church-based counselling, Lifeline Eswatini." },
-      { name: "Severe Mental Illness", where: "National Psychiatric Referral Hospital (Manzini) – main in-patient facility." },
-    ],
-  },
-  {
-    name: "Sexual & Reproductive Health",
-    icon: <ShieldPlus className="w-5 h-5" />,
-    conditions: [
-      { name: "HIV Testing & PrEP", where: "All public clinics (free), FLAS, PSI Lusweti, Baylor (youth-friendly), MSF sites." },
-      { name: "Cervical & Breast Cancer Screening", where: "Mbabane Govt Hospital, RFM, Cancer Association of Eswatini, FLAS clinics." },
-      { name: "Male Medical Circumcision (VMMC)", where: "Free at public clinics, FLAS, Litsemba Letfu / PSI sites." },
-      { name: "Gender-Based Violence (GBV) Support", where: "SWAGAA (Manzini HQ + regional offices), Childline 116, One-Stop Centres at RFM & Mbabane Govt Hospital, Police DVCPU." },
-    ],
-  },
-  {
-    name: "Emergencies & Injuries",
-    icon: <Activity className="w-5 h-5" />,
-    conditions: [
-      { name: "Road Accidents & Trauma", where: "Call 977 (ambulance). Mbabane Govt Hospital & RFM Hospital trauma units. Private: Mbabane Clinic, MRI / Swazi Med." },
-      { name: "Burns", where: "Mbabane Govt Hospital, RFM Hospital burns unit." },
-      { name: "Snake Bites", where: "Nearest hospital immediately – Good Shepherd (Siteki), Hlathikhulu, RFM, Mbabane Govt Hospital." },
-      { name: "Poisoning", where: "Nearest hospital ER; call 977." },
-      { name: "Heart Attack / Stroke", where: "Call 977. Mbabane Clinic, Mbabane Govt Hospital, RFM Hospital." },
-    ],
-  },
-  {
-    name: "General & Primary Care",
-    icon: <Stethoscope className="w-5 h-5" />,
-    conditions: [
-      { name: "Colds, Flu & Fever", where: "Any public clinic, private GPs in Mbabane / Manzini / Matsapha / Ezulwini." },
-      { name: "Dental Care", where: "Mbabane Govt Hospital dental clinic, RFM dental, private dentists in Mbabane & Manzini." },
-      { name: "Eye Care & Spectacles", where: "Mbabane Govt Hospital eye clinic, Good Shepherd eye unit, private optometrists." },
-      { name: "Skin Conditions", where: "Public clinics, Mbabane Govt Hospital dermatology referrals, private GPs." },
-      { name: "Pharmacies & Medication", where: "Central Medical Stores (public), private pharmacies: Clicks, Dis-Chem, Medirite, local pharmacies in Mbabane, Manzini, Matsapha, Nhlangano, Siteki." },
-    ],
-  },
-  {
-    name: "Traditional Medicine",
-    icon: <Pill className="w-5 h-5" />,
-    conditions: [
-      { name: "Tinyanga (Herbalists)", where: "Registered traditional healers via Traditional Healers Organisation of Eswatini." },
-      { name: "Tangoma (Diviners)", where: "Registered traditional healers; often work with MoH on HIV / TB referrals." },
-      { name: "Kufemba (Spiritual healing)", where: "Traditional healers in all regions; consult registered practitioners." },
-    ],
-  },
-];
 
-interface HealthLink {
-  name: string;
-  url?: string;
-  description: string;
-}
-
-const healthServiceLinks: HealthLink[] = [
-  { name: "Ministry of Health – Eswatini", url: "https://www.gov.sz/index.php/ministries-departments/ministry-of-health", description: "Official MoH portal – policies, facilities & programmes" },
-  { name: "Ambulance / Emergency – 977", description: "Call 977 (national emergency) for ambulance & trauma" },
-  { name: "Childline Eswatini / GBV – 116", description: "Call 116 (toll-free) for child protection & GBV support" },
-  { name: "NERCHA (HIV/AIDS Council)", url: "https://www.nercha.org.sz", description: "National HIV/AIDS response & partner directory" },
-  { name: "Mbabane Government Hospital", description: "National referral hospital – Mbabane. +268 2404 2431" },
-  { name: "Raleigh Fitkin Memorial (RFM)", description: "Main mission hospital in Manzini" },
-  { name: "Good Shepherd Hospital (Siteki)", description: "Lubombo referral – TB & general care" },
-  { name: "National Psychiatric Hospital", description: "Manzini – national mental health referral" },
-  { name: "Family Life Association (FLAS)", url: "https://www.flas.org.sz", description: "SRH, HIV testing, family planning – nationwide" },
-  { name: "SWAGAA (GBV support)", url: "https://www.swagaa.org.sz", description: "Counselling & shelter for survivors of GBV" },
-  { name: "Baylor Children's Clinic", description: "Paediatric HIV & adolescent care – Mbabane" },
-  { name: "Cancer Association of Eswatini", description: "Screening, awareness & patient support – Mbabane" },
-];
 
 interface PastPaperLink {
   name: string;
@@ -526,7 +411,7 @@ type JCForm = "All" | "Form 1" | "Form 2" | "Form 3";
 
 const ScholarPage = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse" | "ieb" | "health">("epc");
+  const [activeTab, setActiveTab] = useState<"epc" | "jc" | "egcse" | "ieb">("epc");
   const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [jcForm, setJcForm] = useState<JCForm>("All");
@@ -542,19 +427,12 @@ const ScholarPage = () => {
     });
   }, [jcForm]);
 
-  const healthAsSubjects: Subject[] = useMemo(
-    () => healthCategories.map((c) => ({ name: c.name, icon: c.icon, topics: c.conditions.map((x) => x.name) })),
-    []
-  );
-
   const allSubjects = activeTab === "epc"
     ? epcSubjects
     : activeTab === "jc" ? jcSubjectsFiltered
     : activeTab === "ieb" ? iebSubjects
-    : activeTab === "health" ? healthAsSubjects
     : egcseSubjects;
   const filteredPaperLinks = useMemo(() => {
-    if (activeTab === "health") return [];
     const q = searchQuery.toLowerCase();
     return pastPaperLinks
       .filter((link) => link.level === "all" || link.level === activeTab)
@@ -595,7 +473,6 @@ const ScholarPage = () => {
           { key: "jc" as const, label: "JC", icon: <GraduationCap className="w-4 h-4 inline mr-1.5" /> },
           { key: "egcse" as const, label: "EGCSE", icon: <GraduationCap className="w-4 h-4 inline mr-1.5" /> },
           { key: "ieb" as const, label: "IEB", icon: <GraduationCap className="w-4 h-4 inline mr-1.5" /> },
-          { key: "health" as const, label: "Health", icon: <HeartPulse className="w-4 h-4 inline mr-1.5" /> },
         ]).map((tab) => (
           <button
             key={tab.key}
@@ -692,21 +569,15 @@ const ScholarPage = () => {
                       className="overflow-hidden"
                     >
                       <div className="px-4 pb-4 space-y-2">
-                        {subject.topics.map((topic) => {
-                          const healthInfo = activeTab === "health"
-                            ? healthCategories.find((c) => c.name === subject.name)?.conditions.find((x) => x.name === topic)
-                            : undefined;
-                          return (
+                        {subject.topics.map((topic) => (
                           <button
                             key={topic}
                             onClick={() => {
                               const ctx = activeTab === "jc" && jcForm !== "All"
                                 ? `${subject.name} – ${jcForm}`
                                 : subject.name;
-                              const prompt = activeTab === "health"
-                                ? `Ngichazele nge ${topic} (${subject.name}) eSwatini: timphawu, lokungentiwa, kanye netindzawo lapho ngingatfola lusito noma kwelashwa.`
-                                : `Ngifundzise nge ${topic} (${ctx})`;
-                              const showToast = activeTab === "jc" || activeTab === "health" || debugMode;
+                              const prompt = `Ngifundzise nge ${topic} (${ctx})`;
+                              const showToast = activeTab === "jc" || debugMode;
                               if (debugMode) {
                                 console.log("[BAFO Scholar debug]", {
                                   activeTab,
@@ -732,20 +603,12 @@ const ScholarPage = () => {
                                 }, 0);
                               }
                             }}
-                            className="w-full flex flex-col items-start gap-1 px-3 py-2 rounded-lg bg-muted/50 hover:bg-muted text-left transition-colors"
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/50 hover:bg-muted text-left transition-colors"
                           >
-                            <div className="flex items-center gap-2">
-                              <FileText className="w-3.5 h-3.5 text-primary shrink-0" />
-                              <span className="text-sm font-body text-foreground">{topic}</span>
-                            </div>
-                            {healthInfo && (
-                              <span className="text-xs text-muted-foreground font-body pl-5">
-                                {healthInfo.where}
-                              </span>
-                            )}
+                            <FileText className="w-3.5 h-3.5 text-primary shrink-0" />
+                            <span className="text-sm font-body text-foreground">{topic}</span>
                           </button>
-                          );
-                        })}
+                        ))}
                       </div>
                     </motion.div>
                   )}
@@ -756,69 +619,34 @@ const ScholarPage = () => {
         </AnimatePresence>
 
         {/* Resources Section */}
-        {activeTab === "health" ? (
-          <div className="mt-6 pt-4 border-t border-border">
-            <div className="flex items-center gap-2 mb-3">
-              <ShieldPlus className="w-4 h-4 text-primary" />
-              <h3 className="font-display font-bold text-sm text-foreground">Health Services & Contacts</h3>
-            </div>
-            <p className="text-xs text-muted-foreground font-body mb-3">
-              ⚠️ Lokunikwa la kungelusito lwekwati kuphela. Kutindzaba telimphilo, vakashela inesi noma dokotela. Lusito loluphutfumako: <strong>977</strong>.
-            </p>
-            <div className="space-y-2">
-              {healthServiceLinks.map((link) => {
-                const Wrapper: any = link.url ? "a" : "div";
-                const props = link.url
-                  ? { href: link.url, target: "_blank", rel: "noopener noreferrer" }
-                  : {};
-                return (
-                  <Wrapper
-                    key={link.name}
-                    {...props}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                      {link.url ? <ExternalLink className="w-4 h-4" /> : <HeartPulse className="w-4 h-4" />}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
-                      <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
-                    </div>
-                  </Wrapper>
-                );
-              })}
-            </div>
+        <div className="mt-6 pt-4 border-t border-border">
+          <div className="flex items-center gap-2 mb-3">
+            <Download className="w-4 h-4 text-primary" />
+            <h3 className="font-display font-bold text-sm text-foreground">Past Exam Papers</h3>
           </div>
-        ) : (
-          <div className="mt-6 pt-4 border-t border-border">
-            <div className="flex items-center gap-2 mb-3">
-              <Download className="w-4 h-4 text-primary" />
-              <h3 className="font-display font-bold text-sm text-foreground">Past Exam Papers</h3>
-            </div>
-            <p className="text-xs text-muted-foreground font-body mb-3">
-              Downloadisha emaphepha etiviwo takadzeni kuletisayithi:
-            </p>
-            <div className="space-y-2">
-              {filteredPaperLinks.map((link) => (
-                  <a
-                    key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                      <ExternalLink className="w-4 h-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
-                      <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
-                    </div>
-                  </a>
-                ))}
-            </div>
+          <p className="text-xs text-muted-foreground font-body mb-3">
+            Downloadisha emaphepha etiviwo takadzeni kuletisayithi:
+          </p>
+          <div className="space-y-2">
+            {filteredPaperLinks.map((link) => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <ExternalLink className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                    <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
+                  </div>
+                </a>
+              ))}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
