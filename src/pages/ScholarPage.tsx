@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download, Search, X, Dumbbell, Wrench, BookOpenText, HeartPulse, Stethoscope, Activity, Brain, Baby, Pill, Syringe, ShieldPlus } from "lucide-react";
+import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download, Search, X, Dumbbell, Wrench, BookOpenText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -129,123 +129,8 @@ const iebSubjects: Subject[] = [
   { name: "Dramatic Arts", icon: <BookOpenText className="w-5 h-5" />, topics: ["Performance", "South African Theatre", "World Theatre", "Theatre History"] },
 ];
 
-interface HealthCategory {
-  name: string;
-  icon: React.ReactNode;
-  conditions: { name: string; where: string }[];
-}
 
-const healthCategories: HealthCategory[] = [
-  {
-    name: "Communicable Diseases",
-    icon: <Syringe className="w-5 h-5" />,
-    conditions: [
-      { name: "HIV / AIDS", where: "Free ART, testing & PrEP at all government clinics, RFM Hospital (Manzini), Mbabane Govt Hospital, Baylor Children's Clinic (Mbabane), MSF Shiselweni, NERCHA partner sites." },
-      { name: "Tuberculosis (TB)", where: "Free diagnosis & treatment at Good Shepherd Hospital (Siteki – national TB referral), all government clinics, MSF Matsapha & Nhlangano TB clinics." },
-      { name: "Malaria", where: "Lubombo & Hhohho lowveld clinics, Good Shepherd Hospital, Hlathikhulu Govt Hospital, National Malaria Programme (MoH)." },
-      { name: "COVID-19 / Flu", where: "Any public clinic, Mbabane Govt Hospital, RFM Hospital, private GPs, Mbabane Clinic, Manzini Clinic." },
-      { name: "STIs (Gonorrhoea, Syphilis, etc.)", where: "Free at all public clinics & STI clinics, Family Life Association of Eswatini (FLAS) – Mbabane, Manzini, Nhlangano, Siteki." },
-      { name: "Hepatitis B & C", where: "Mbabane Govt Hospital, RFM Hospital, private labs (Lancet, Ampath)." },
-      { name: "Cholera / Diarrhoea", where: "Nearest clinic immediately; Mbabane Govt Hospital, RFM Hospital for severe cases." },
-      { name: "Bilharzia (Schistosomiasis)", where: "Public clinics in lowveld areas, Good Shepherd Hospital, Hlane area clinics." },
-    ],
-  },
-  {
-    name: "Non-Communicable Diseases",
-    icon: <HeartPulse className="w-5 h-5" />,
-    conditions: [
-      { name: "Hypertension (High BP)", where: "All public clinics (free screening), Mbabane Govt Hospital NCD clinic, RFM Hospital, Mbabane Clinic." },
-      { name: "Diabetes (Type 1 & 2)", where: "Mbabane Govt Hospital diabetic clinic, RFM Hospital, Good Shepherd, Hlathikhulu; Eswatini Diabetes Association." },
-      { name: "Heart Disease & Stroke", where: "Mbabane Govt Hospital, Mbabane Clinic; complex cases referred to South Africa (Pretoria/Johannesburg)." },
-      { name: "Asthma & COPD", where: "All public clinics, Mbabane Govt Hospital respiratory clinic, private GPs." },
-      { name: "Cancer (screening & care)", where: "Mbabane Govt Hospital oncology clinic, Cancer Association of Eswatini (Mbabane); advanced treatment usually referred to SA." },
-      { name: "Kidney Disease", where: "Mbabane Govt Hospital, RFM Hospital; dialysis at private centres & referral to SA." },
-    ],
-  },
-  {
-    name: "Maternal & Child Health",
-    icon: <Baby className="w-5 h-5" />,
-    conditions: [
-      { name: "Antenatal Care (Pregnancy)", where: "Free at all public clinics, RFM Hospital, Mbabane Govt Hospital, Good Shepherd, Hlathikhulu, Pigg's Peak Hospital." },
-      { name: "Childhood Immunisations (EPI)", where: "Free at every public clinic – follow EPI schedule from birth." },
-      { name: "Child Malnutrition", where: "Public clinics, Baylor Children's Clinic, World Vision & UNICEF supported sites." },
-      { name: "Childhood Illnesses (fever, diarrhoea)", where: "Nearest clinic, Mbabane Govt Hospital paediatric ward, RFM Paediatrics." },
-      { name: "Family Planning & Contraception", where: "Free at public clinics, FLAS clinics (Mbabane, Manzini, Nhlangano, Siteki), PSI Lusweti outreach." },
-    ],
-  },
-  {
-    name: "Mental Health",
-    icon: <Brain className="w-5 h-5" />,
-    conditions: [
-      { name: "Depression & Anxiety", where: "National Psychiatric Referral Hospital (Manzini), Mbabane Govt Hospital mental health unit, SWAGAA counselling." },
-      { name: "Substance Abuse (alcohol/drugs)", where: "Psychiatric Hospital Manzini, Mbabane Clinic, Salvation Army programmes." },
-      { name: "Stress & Burnout", where: "Private counsellors in Mbabane/Manzini, church-based counselling, Lifeline Eswatini." },
-      { name: "Severe Mental Illness", where: "National Psychiatric Referral Hospital (Manzini) – main in-patient facility." },
-    ],
-  },
-  {
-    name: "Sexual & Reproductive Health",
-    icon: <ShieldPlus className="w-5 h-5" />,
-    conditions: [
-      { name: "HIV Testing & PrEP", where: "All public clinics (free), FLAS, PSI Lusweti, Baylor (youth-friendly), MSF sites." },
-      { name: "Cervical & Breast Cancer Screening", where: "Mbabane Govt Hospital, RFM, Cancer Association of Eswatini, FLAS clinics." },
-      { name: "Male Medical Circumcision (VMMC)", where: "Free at public clinics, FLAS, Litsemba Letfu / PSI sites." },
-      { name: "Gender-Based Violence (GBV) Support", where: "SWAGAA (Manzini HQ + regional offices), Childline 116, One-Stop Centres at RFM & Mbabane Govt Hospital, Police DVCPU." },
-    ],
-  },
-  {
-    name: "Emergencies & Injuries",
-    icon: <Activity className="w-5 h-5" />,
-    conditions: [
-      { name: "Road Accidents & Trauma", where: "Call 977 (ambulance). Mbabane Govt Hospital & RFM Hospital trauma units. Private: Mbabane Clinic, MRI / Swazi Med." },
-      { name: "Burns", where: "Mbabane Govt Hospital, RFM Hospital burns unit." },
-      { name: "Snake Bites", where: "Nearest hospital immediately – Good Shepherd (Siteki), Hlathikhulu, RFM, Mbabane Govt Hospital." },
-      { name: "Poisoning", where: "Nearest hospital ER; call 977." },
-      { name: "Heart Attack / Stroke", where: "Call 977. Mbabane Clinic, Mbabane Govt Hospital, RFM Hospital." },
-    ],
-  },
-  {
-    name: "General & Primary Care",
-    icon: <Stethoscope className="w-5 h-5" />,
-    conditions: [
-      { name: "Colds, Flu & Fever", where: "Any public clinic, private GPs in Mbabane / Manzini / Matsapha / Ezulwini." },
-      { name: "Dental Care", where: "Mbabane Govt Hospital dental clinic, RFM dental, private dentists in Mbabane & Manzini." },
-      { name: "Eye Care & Spectacles", where: "Mbabane Govt Hospital eye clinic, Good Shepherd eye unit, private optometrists." },
-      { name: "Skin Conditions", where: "Public clinics, Mbabane Govt Hospital dermatology referrals, private GPs." },
-      { name: "Pharmacies & Medication", where: "Central Medical Stores (public), private pharmacies: Clicks, Dis-Chem, Medirite, local pharmacies in Mbabane, Manzini, Matsapha, Nhlangano, Siteki." },
-    ],
-  },
-  {
-    name: "Traditional Medicine",
-    icon: <Pill className="w-5 h-5" />,
-    conditions: [
-      { name: "Tinyanga (Herbalists)", where: "Registered traditional healers via Traditional Healers Organisation of Eswatini." },
-      { name: "Tangoma (Diviners)", where: "Registered traditional healers; often work with MoH on HIV / TB referrals." },
-      { name: "Kufemba (Spiritual healing)", where: "Traditional healers in all regions; consult registered practitioners." },
-    ],
-  },
-];
 
-interface HealthLink {
-  name: string;
-  url?: string;
-  description: string;
-}
-
-const healthServiceLinks: HealthLink[] = [
-  { name: "Ministry of Health – Eswatini", url: "https://www.gov.sz/index.php/ministries-departments/ministry-of-health", description: "Official MoH portal – policies, facilities & programmes" },
-  { name: "Ambulance / Emergency – 977", description: "Call 977 (national emergency) for ambulance & trauma" },
-  { name: "Childline Eswatini / GBV – 116", description: "Call 116 (toll-free) for child protection & GBV support" },
-  { name: "NERCHA (HIV/AIDS Council)", url: "https://www.nercha.org.sz", description: "National HIV/AIDS response & partner directory" },
-  { name: "Mbabane Government Hospital", description: "National referral hospital – Mbabane. +268 2404 2431" },
-  { name: "Raleigh Fitkin Memorial (RFM)", description: "Main mission hospital in Manzini" },
-  { name: "Good Shepherd Hospital (Siteki)", description: "Lubombo referral – TB & general care" },
-  { name: "National Psychiatric Hospital", description: "Manzini – national mental health referral" },
-  { name: "Family Life Association (FLAS)", url: "https://www.flas.org.sz", description: "SRH, HIV testing, family planning – nationwide" },
-  { name: "SWAGAA (GBV support)", url: "https://www.swagaa.org.sz", description: "Counselling & shelter for survivors of GBV" },
-  { name: "Baylor Children's Clinic", description: "Paediatric HIV & adolescent care – Mbabane" },
-  { name: "Cancer Association of Eswatini", description: "Screening, awareness & patient support – Mbabane" },
-];
 
 interface PastPaperLink {
   name: string;
