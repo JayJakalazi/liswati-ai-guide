@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageSquare, CreditCard, Info, BookOpen, Trash2, Plus } from "lucide-react";
+import { X, MessageSquare, CreditCard, Info, BookOpen, Trash2, Plus, HeartPulse } from "lucide-react";
 import bafoLogo from "@/assets/bafo-logo.png";
 import { useNavigate } from "react-router-dom";
 import { Conversation } from "@/lib/chatStorage";
@@ -27,6 +27,7 @@ const SideMenu = ({
 
   const menuItems = [
     { icon: BookOpen, label: "BAFO Scholar", action: () => { navigate("/scholar"); onClose(); } },
+    { icon: HeartPulse, label: "Health Services", action: () => { navigate("/health"); onClose(); } },
     { icon: CreditCard, label: "Subscription", action: () => { navigate("/pricing"); onClose(); } },
     { icon: Info, label: "About BAFO", action: () => { navigate("/about"); onClose(); } },
   ];
