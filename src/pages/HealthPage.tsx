@@ -205,7 +205,7 @@ const HealthPage = () => {
 
       {/* Categories */}
       <div className="flex-1 overflow-y-auto px-5 pb-8 space-y-3">
-        {filtered.map((category) => (
+        {filteredCategories.map((category) => (
           <div key={category.name} className="rounded-2xl bg-card border border-border overflow-hidden">
             <button
               onClick={() => setExpanded(expanded === category.name ? null : category.name)}
@@ -258,39 +258,50 @@ const HealthPage = () => {
           </div>
         ))}
 
+        {/* No results */}
+        {isSearching && filteredCategories.length === 0 && filteredLinks.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <Frown className="w-10 h-10 text-muted-foreground/50 mb-3" />
+            <p className="text-sm font-display text-muted-foreground">Akukho miphumela ifunyenwe</p>
+            <p className="text-xs text-muted-foreground/70 font-body mt-1">Sesha ngelinye igama noma indzawo.</p>
+          </div>
+        )}
+
         {/* Services & Contacts */}
-        <div className="mt-6 pt-4 border-t border-border">
-          <div className="flex items-center gap-2 mb-3">
-            <ShieldPlus className="w-4 h-4 text-primary" />
-            <h3 className="font-display font-bold text-sm text-foreground">Health Services & Contacts</h3>
+        {(!isSearching || filteredLinks.length > 0) && (
+          <div className="mt-6 pt-4 border-t border-border">
+            <div className="flex items-center gap-2 mb-3">
+              <ShieldPlus className="w-4 h-4 text-primary" />
+              <h3 className="font-display font-bold text-sm text-foreground">Health Services & Contacts</h3>
+            </div>
+            <p className="text-xs text-muted-foreground font-body mb-3">
+              ⚠️ Lokunikwa la kungelusito lwekwati kuphela. Kutindzaba telimphilo, vakashela inesi noma dokotela. Lusito loluphutfumako: <strong>977</strong>.
+            </p>
+            <div className="space-y-2">
+              {filteredLinks.map((link) => {
+                const Wrapper: any = link.url ? "a" : "div";
+                const props = link.url
+                  ? { href: link.url, target: "_blank", rel: "noopener noreferrer" }
+                  : {};
+                return (
+                  <Wrapper
+                    key={link.name}
+                    {...props}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      {link.url ? <ExternalLink className="w-4 h-4" /> : <HeartPulse className="w-4 h-4" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                      <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
+                    </div>
+                  </Wrapper>
+                );
+              })}
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground font-body mb-3">
-            ⚠️ Lokunikwa la kungelusito lwekwati kuphela. Kutindzaba telimphilo, vakashela inesi noma dokotela. Lusito loluphutfumako: <strong>977</strong>.
-          </p>
-          <div className="space-y-2">
-            {healthServiceLinks.map((link) => {
-              const Wrapper: any = link.url ? "a" : "div";
-              const props = link.url
-                ? { href: link.url, target: "_blank", rel: "noopener noreferrer" }
-                : {};
-              return (
-                <Wrapper
-                  key={link.name}
-                  {...props}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
-                >
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                    {link.url ? <ExternalLink className="w-4 h-4" /> : <HeartPulse className="w-4 h-4" />}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
-                    <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
-                  </div>
-                </Wrapper>
-              );
-            })}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
