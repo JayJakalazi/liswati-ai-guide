@@ -179,15 +179,15 @@ const HealthPage = () => {
         </p>
       </div>
 
-      {/* Search */}
-      <div className="px-5 mb-4">
+      {/* Sticky Search */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm px-5 py-3 border-b border-border">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Sesha sifo noma indzawo..."
+            placeholder="Sesha sifo, indzawo, noma lusito..."
             className="w-full pl-9 pr-9 py-2.5 rounded-xl bg-muted border border-border text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
           />
           {searchQuery && (
@@ -196,6 +196,11 @@ const HealthPage = () => {
             </button>
           )}
         </div>
+        {isSearching && (
+          <p className="text-xs text-muted-foreground font-body mt-1.5">
+            {filteredCategories.length} category(s) · {filteredLinks.length} contact(s) found
+          </p>
+        )}
       </div>
 
       {/* Categories */}
