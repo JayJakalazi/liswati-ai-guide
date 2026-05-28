@@ -127,9 +127,11 @@ const HealthPage = () => {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filtered = useMemo(() => {
-    const q = searchQuery.toLowerCase();
-    if (!q) return healthCategories;
+  const q = searchQuery.toLowerCase().trim();
+  const isSearching = q.length > 0;
+
+  const filteredCategories = useMemo(() => {
+    if (!isSearching) return healthCategories;
     return healthCategories
       .map((c) => ({
         ...c,
@@ -138,7 +140,25 @@ const HealthPage = () => {
         ),
       }))
       .filter((c) => c.name.toLowerCase().includes(q) || c.conditions.length > 0);
-  }, [searchQuery]);
+  }, [q, isSearching]);
+
+  const filteredLinks = useMemo(() => {
+    if (!isSearching) return healthServiceLinks;
+    return healthServiceLinks.filter(
+      (l) =>
+        l.name.toLowerCase().includes(q) ||
+        l.description.toLowerCase().includes(q)
+    );
+  }, [q, isSearching]);
+
+  // Auto-expand categories when searching
+  useEffect(() => {
+    if (isSearching && filteredCategories.length > 0) {
+      setExpanded(filteredCategories[0].name);
+    } else if (!isSearching) {
+      setExpanded(null);
+    }
+  }, [isSearching, filteredCategories]);
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col">
