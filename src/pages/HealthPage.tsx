@@ -237,6 +237,13 @@ const HealthPage = () => {
                             toast("Sengikutfumelele kuchat", {
                               description: prompt,
                               duration: 5000,
+                              action: {
+                                label: "Copy",
+                                onClick: () => {
+                                  navigator.clipboard.writeText(prompt);
+                                  toast.success("Copied to clipboard");
+                                },
+                              },
                             });
                           }, 0);
                         }}
