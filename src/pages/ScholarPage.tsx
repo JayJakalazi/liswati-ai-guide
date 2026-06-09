@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download, Search, X, Dumbbell, Wrench, BookOpenText } from "lucide-react";
+import { ArrowLeft, BookOpen, FileText, GraduationCap, Calculator, Globe, FlaskConical, Languages, MapPin, Landmark, Sprout, Palette, Monitor, ExternalLink, Download, Search, X, Dumbbell, Wrench, BookOpenText, Copy } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -598,6 +598,13 @@ const ScholarPage = () => {
                                         ? `tab=${activeTab} · form=${jcForm}\n${prompt}`
                                         : prompt,
                                       duration: 5000,
+                                      action: {
+                                        label: "Copy",
+                                        onClick: () => {
+                                          navigator.clipboard.writeText(prompt);
+                                          toast.success("Copied to clipboard");
+                                        },
+                                      },
                                     }
                                   );
                                 }, 0);

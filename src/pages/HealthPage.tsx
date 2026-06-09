@@ -1,4 +1,4 @@
-import { ArrowLeft, HeartPulse, Stethoscope, Activity, Brain, Baby, Pill, Syringe, ShieldPlus, FileText, ExternalLink, Search, X, Frown } from "lucide-react";
+import { ArrowLeft, HeartPulse, Stethoscope, Activity, Brain, Baby, Pill, Syringe, ShieldPlus, FileText, ExternalLink, Search, X, Frown, Copy, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -237,6 +237,13 @@ const HealthPage = () => {
                             toast("Sengikutfumelele kuchat", {
                               description: prompt,
                               duration: 5000,
+                              action: {
+                                label: "Copy",
+                                onClick: () => {
+                                  navigator.clipboard.writeText(prompt);
+                                  toast.success("Copied to clipboard");
+                                },
+                              },
                             });
                           }, 0);
                         }}
