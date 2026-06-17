@@ -120,9 +120,26 @@ const CulturePage = () => {
   const q = searchQuery.toLowerCase().trim();
   const isSearching = q.length > 0;
 
+  const [activeChip, setActiveChip] = useState<string | null>(null);
+
+  const chips: { label: string; match: string }[] = [
+    { label: "Ceremonies", match: "Imicimbi" },
+    { label: "Attire", match: "Sigcamu" },
+    { label: "Customs", match: "Sintu" },
+    { label: "Heritage Sites", match: "Tindzawo" },
+    { label: "Food", match: "Kudla" },
+    { label: "Language", match: "Lulwimi" },
+    { label: "Royalty", match: "Bukhosi" },
+    { label: "Sports", match: "Imidlalo" },
+  ];
+
   const filteredCategories = useMemo(() => {
-    if (!isSearching) return cultureCategories;
-    return cultureCategories
+    let cats = cultureCategories;
+    if (activeChip) {
+      cats = cats.filter((c) => c.name.includes(activeChip));
+    }
+    if (!isSearching) return cats;
+    return cats
       .map((c) => ({
         ...c,
         topics: c.topics.filter(
@@ -130,7 +147,7 @@ const CulturePage = () => {
         ),
       }))
       .filter((c) => c.name.toLowerCase().includes(q) || c.topics.length > 0);
-  }, [q, isSearching]);
+  }, [q, isSearching, activeChip]);
 
   const filteredLinks = useMemo(() => {
     if (!isSearching) return cultureLinks;
