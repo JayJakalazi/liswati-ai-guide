@@ -120,9 +120,26 @@ const CulturePage = () => {
   const q = searchQuery.toLowerCase().trim();
   const isSearching = q.length > 0;
 
+  const [activeChip, setActiveChip] = useState<string | null>(null);
+
+  const chips: { label: string; match: string }[] = [
+    { label: "Ceremonies", match: "Imicimbi" },
+    { label: "Attire", match: "Sigcamu" },
+    { label: "Customs", match: "Sintu" },
+    { label: "Heritage Sites", match: "Tindzawo" },
+    { label: "Food", match: "Kudla" },
+    { label: "Language", match: "Lulwimi" },
+    { label: "Royalty", match: "Bukhosi" },
+    { label: "Sports", match: "Imidlalo" },
+  ];
+
   const filteredCategories = useMemo(() => {
-    if (!isSearching) return cultureCategories;
-    return cultureCategories
+    let cats = cultureCategories;
+    if (activeChip) {
+      cats = cats.filter((c) => c.name.includes(activeChip));
+    }
+    if (!isSearching) return cats;
+    return cats
       .map((c) => ({
         ...c,
         topics: c.topics.filter(
@@ -130,7 +147,7 @@ const CulturePage = () => {
         ),
       }))
       .filter((c) => c.name.toLowerCase().includes(q) || c.topics.length > 0);
-  }, [q, isSearching]);
+  }, [q, isSearching, activeChip]);
 
   const filteredLinks = useMemo(() => {
     if (!isSearching) return cultureLinks;
@@ -185,6 +202,31 @@ const CulturePage = () => {
             {filteredCategories.length} category(s) · {filteredLinks.length} link(s) found
           </p>
         )}
+        <div className="flex gap-2 overflow-x-auto mt-3 -mx-1 px-1 pb-1 scrollbar-none">
+          <button
+            onClick={() => setActiveChip(null)}
+            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-display font-semibold border transition-colors ${
+              activeChip === null
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-muted text-foreground border-border"
+            }`}
+          >
+            All
+          </button>
+          {chips.map((chip) => (
+            <button
+              key={chip.label}
+              onClick={() => setActiveChip(activeChip === chip.match ? null : chip.match)}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-display font-semibold border transition-colors ${
+                activeChip === chip.match
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-muted text-foreground border-border"
+              }`}
+            >
+              {chip.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto px-5 pb-8 space-y-3">
