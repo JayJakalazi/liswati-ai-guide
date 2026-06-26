@@ -1,4 +1,4 @@
-import { ArrowLeft, HeartPulse, Stethoscope, Activity, Brain, Baby, Pill, Syringe, ShieldPlus, FileText, ExternalLink, Search, X, Frown, Copy, Check } from "lucide-react";
+import { ArrowLeft, HeartPulse, Stethoscope, Activity, Brain, Baby, Pill, Syringe, ShieldPlus, FileText, ExternalLink, Search, X, Frown, Copy, Check, Phone, Mail, Clock, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -105,6 +105,10 @@ interface HealthLink {
   name: string;
   url?: string;
   description: string;
+  phone?: string;
+  email?: string;
+  hours?: string;
+  address?: string;
 }
 
 const healthServiceLinks: HealthLink[] = [
@@ -120,7 +124,15 @@ const healthServiceLinks: HealthLink[] = [
   { name: "SWAGAA (GBV support)", url: "https://www.swagaa.org.sz", description: "Counselling & shelter for survivors of GBV" },
   { name: "Baylor Children's Clinic", description: "Paediatric HIV & adolescent care – Mbabane" },
   { name: "Cancer Association of Eswatini", description: "Screening, awareness & patient support – Mbabane" },
-  { name: "The Luke Commission (TLC)", url: "https://lukecommission.org", description: "Miracle Campus, Sidvokodvo – free comprehensive healthcare, HIV, surgery & maternal care" },
+  {
+    name: "The Luke Commission (TLC)",
+    url: "https://lukecommission.org",
+    description: "Miracle Campus – free comprehensive healthcare, HIV, surgery & maternal care",
+    phone: "+268 2417 0024",
+    email: "info@lukecommission.org",
+    hours: "Mon–Fri: 7:00 AM – 5:00 PM (Emergencies 24/7)",
+    address: "Miracle Campus, Sidvokodvo, Manzini Region, Eswatini",
+  },
 ];
 
 const HealthPage = () => {
@@ -148,7 +160,11 @@ const HealthPage = () => {
     return healthServiceLinks.filter(
       (l) =>
         l.name.toLowerCase().includes(q) ||
-        l.description.toLowerCase().includes(q)
+        l.description.toLowerCase().includes(q) ||
+        l.phone?.toLowerCase().includes(q) ||
+        l.email?.toLowerCase().includes(q) ||
+        l.hours?.toLowerCase().includes(q) ||
+        l.address?.toLowerCase().includes(q)
     );
   }, [q, isSearching]);
 
@@ -287,22 +303,62 @@ const HealthPage = () => {
             </p>
             <div className="space-y-2">
               {filteredLinks.map((link) => {
-                const Wrapper: any = link.url ? "a" : "div";
-                const props = link.url
+                const hasDetails = !!(link.phone || link.email || link.hours || link.address);
+                const Wrapper: any = link.url && !hasDetails ? "a" : "div";
+                const props = link.url && !hasDetails
                   ? { href: link.url, target: "_blank", rel: "noopener noreferrer" }
                   : {};
                 return (
                   <Wrapper
                     key={link.name}
                     {...props}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
+                    className="flex items-start gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5">
                       {link.url ? <ExternalLink className="w-4 h-4" /> : <HeartPulse className="w-4 h-4" />}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                      {link.url && hasDetails ? (
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-sm font-display font-semibold text-foreground hover:text-primary"
+                        >
+                          {link.name}
+                        </a>
+                      ) : (
+                        <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                      )}
                       <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
+                      {hasDetails && (
+                        <div className="mt-2 space-y-1.5">
+                          {link.phone && (
+                            <a href={`tel:${link.phone.replace(/\s+/g, "")}`} className="flex items-start gap-2 text-xs font-body text-foreground hover:text-primary">
+                              <Phone className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                              <span>{link.phone}</span>
+                            </a>
+                          )}
+                          {link.email && (
+                            <a href={`mailto:${link.email}`} className="flex items-start gap-2 text-xs font-body text-foreground hover:text-primary break-all">
+                              <Mail className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                              <span>{link.email}</span>
+                            </a>
+                          )}
+                          {link.hours && (
+                            <div className="flex items-start gap-2 text-xs font-body text-muted-foreground">
+                              <Clock className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                              <span>{link.hours}</span>
+                            </div>
+                          )}
+                          {link.address && (
+                            <div className="flex items-start gap-2 text-xs font-body text-muted-foreground">
+                              <MapPin className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                              <span>{link.address}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </Wrapper>
                 );
