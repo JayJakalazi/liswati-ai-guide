@@ -120,6 +120,7 @@ const healthServiceLinks: HealthLink[] = [
   { name: "SWAGAA (GBV support)", url: "https://www.swagaa.org.sz", description: "Counselling & shelter for survivors of GBV" },
   { name: "Baylor Children's Clinic", description: "Paediatric HIV & adolescent care – Mbabane" },
   { name: "Cancer Association of Eswatini", description: "Screening, awareness & patient support – Mbabane" },
+  { name: "The Luke Commission (TLC)", url: "https://lukecommission.org", description: "Miracle Campus, Sidvokodvo – free comprehensive healthcare, HIV, surgery & maternal care" },
 ];
 
 const HealthPage = () => {
