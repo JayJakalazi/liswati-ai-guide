@@ -303,22 +303,62 @@ const HealthPage = () => {
             </p>
             <div className="space-y-2">
               {filteredLinks.map((link) => {
-                const Wrapper: any = link.url ? "a" : "div";
-                const props = link.url
+                const hasDetails = !!(link.phone || link.email || link.hours || link.address);
+                const Wrapper: any = link.url && !hasDetails ? "a" : "div";
+                const props = link.url && !hasDetails
                   ? { href: link.url, target: "_blank", rel: "noopener noreferrer" }
                   : {};
                 return (
                   <Wrapper
                     key={link.name}
                     {...props}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
+                    className="flex items-start gap-3 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5">
                       {link.url ? <ExternalLink className="w-4 h-4" /> : <HeartPulse className="w-4 h-4" />}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                      {link.url && hasDetails ? (
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-sm font-display font-semibold text-foreground hover:text-primary"
+                        >
+                          {link.name}
+                        </a>
+                      ) : (
+                        <span className="block text-sm font-display font-semibold text-foreground">{link.name}</span>
+                      )}
                       <span className="block text-xs text-muted-foreground font-body">{link.description}</span>
+                      {hasDetails && (
+                        <div className="mt-2 space-y-1.5">
+                          {link.phone && (
+                            <a href={`tel:${link.phone.replace(/\s+/g, "")}`} className="flex items-start gap-2 text-xs font-body text-foreground hover:text-primary">
+                              <Phone className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                              <span>{link.phone}</span>
+                            </a>
+                          )}
+                          {link.email && (
+                            <a href={`mailto:${link.email}`} className="flex items-start gap-2 text-xs font-body text-foreground hover:text-primary break-all">
+                              <Mail className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                              <span>{link.email}</span>
+                            </a>
+                          )}
+                          {link.hours && (
+                            <div className="flex items-start gap-2 text-xs font-body text-muted-foreground">
+                              <Clock className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                              <span>{link.hours}</span>
+                            </div>
+                          )}
+                          {link.address && (
+                            <div className="flex items-start gap-2 text-xs font-body text-muted-foreground">
+                              <MapPin className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                              <span>{link.address}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </Wrapper>
                 );
