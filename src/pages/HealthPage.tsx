@@ -105,6 +105,10 @@ interface HealthLink {
   name: string;
   url?: string;
   description: string;
+  phone?: string;
+  email?: string;
+  hours?: string;
+  address?: string;
 }
 
 const healthServiceLinks: HealthLink[] = [
@@ -120,7 +124,15 @@ const healthServiceLinks: HealthLink[] = [
   { name: "SWAGAA (GBV support)", url: "https://www.swagaa.org.sz", description: "Counselling & shelter for survivors of GBV" },
   { name: "Baylor Children's Clinic", description: "Paediatric HIV & adolescent care – Mbabane" },
   { name: "Cancer Association of Eswatini", description: "Screening, awareness & patient support – Mbabane" },
-  { name: "The Luke Commission (TLC)", url: "https://lukecommission.org", description: "Miracle Campus, Sidvokodvo – free comprehensive healthcare, HIV, surgery & maternal care" },
+  {
+    name: "The Luke Commission (TLC)",
+    url: "https://lukecommission.org",
+    description: "Miracle Campus – free comprehensive healthcare, HIV, surgery & maternal care",
+    phone: "+268 2417 0024",
+    email: "info@lukecommission.org",
+    hours: "Mon–Fri: 7:00 AM – 5:00 PM (Emergencies 24/7)",
+    address: "Miracle Campus, Sidvokodvo, Manzini Region, Eswatini",
+  },
 ];
 
 const HealthPage = () => {
