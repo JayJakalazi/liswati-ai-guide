@@ -160,7 +160,11 @@ const HealthPage = () => {
     return healthServiceLinks.filter(
       (l) =>
         l.name.toLowerCase().includes(q) ||
-        l.description.toLowerCase().includes(q)
+        l.description.toLowerCase().includes(q) ||
+        l.phone?.toLowerCase().includes(q) ||
+        l.email?.toLowerCase().includes(q) ||
+        l.hours?.toLowerCase().includes(q) ||
+        l.address?.toLowerCase().includes(q)
     );
   }, [q, isSearching]);
 
