@@ -45,6 +45,21 @@ const bizCategories: BizCategory[] = [
     ],
   },
   {
+    name: "Emakethe Wemali (Stock Exchange & Financial Platforms)",
+    icon: <BarChart3 className="w-5 h-5" />,
+    topics: [
+      { name: "Eswatini Stock Exchange (ESE)", details: "Thenga emasheshi e-ESwatini; ESE All Share Index, listing requirements, ne-dividends. vakashela www.ese.co.sz." },
+      { name: "Eswatini C-Trade", details: "Indlela lesebentiswa ngayo ku-ese.co.sz – live quotes ne-order placement." },
+      { name: "Listed Companies (Major)", details: "FNBE, NED, SBC, SEL, SWP, GRYS, INALA, NPC, RSC, AGS – tine ticker codes nge-ESE." },
+      { name: "FNB Eswatini Stockbroking", details: "Vula i-brokerage account, thenge emasheshi ne-bonds nge-FNB." },
+      { name: "Nedbank Eswatini Online Share Trading", details: "Platform yekutreydisana nge-emasheshi e-ESE noma eJSE." },
+      { name: "Standard Bank Eswatini Share Trading", details: "Access equity trading through Standard Bank Private Banking / stockbroking." },
+      { name: "Unit Trusts & Asset Managers", details: "Coronation, Allan Gray, Stanlib, Old Mutual – tiyatsengiswa ngemabhange laseSwatini." },
+      { name: "EasyEquities (SA / accessible in ESwatini)", details: "Thenga emasheshi e-JSE, NYSE, NASDAQ nge fractional investing – app i-fumaneka Eswatini." },
+      { name: "Financial Services Regulatory Authority (FSRA)", details: "Umkhicito wezinsimbi zemali eSwatini – bhalisa, imitsetfo, ne-consumer protection." },
+    ],
+  },
+  {
     name: "Tincwadzi Telicense (Licenses & Permits)",
     icon: <FileText className="w-5 h-5" />,
     topics: [
