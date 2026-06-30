@@ -45,7 +45,7 @@ const bizCategories: BizCategory[] = [
     ],
   },
   {
-    name: "Emakethe Wemali (Stock Exchange & Financial Platforms)",
+    name: "Imakethe yemali (Stock Exchange & Financial Platforms)",
     icon: <BarChart3 className="w-5 h-5" />,
     topics: [
       { name: "Eswatini Stock Exchange (ESE)", details: "Thenga emasheshi e-ESwatini; ESE All Share Index, listing requirements, ne-dividends. vakashela www.ese.co.sz." },
