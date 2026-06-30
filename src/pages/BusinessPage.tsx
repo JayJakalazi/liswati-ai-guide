@@ -1,4 +1,4 @@
-import { ArrowLeft, Briefcase, Building2, FileText, Landmark, TrendingUp, Coins, Users, Search, X, Frown, ExternalLink } from "lucide-react";
+import { ArrowLeft, Briefcase, Building2, FileText, Landmark, TrendingUp, Coins, Users, Search, X, Frown, ExternalLink, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -42,6 +42,21 @@ const bizCategories: BizCategory[] = [
       { name: "Inhlanyelo Fund", details: "Imali yekucala libhizinisi yebantfwana baka Sive (under Tibiyo)." },
       { name: "Standard Bank / Nedbank / FNB / SwaziBank", details: "Emabhange labe SME loans, overdrafts, ne-business accounts." },
       { name: "Royal Science & Tech Park (RSTP)", details: "Innovation hub & incubator – Phocweni; lusito kuma-tech startup." },
+    ],
+  },
+  {
+    name: "Emakethe Wemali (Stock Exchange & Financial Platforms)",
+    icon: <BarChart3 className="w-5 h-5" />,
+    topics: [
+      { name: "Eswatini Stock Exchange (ESE)", details: "Thenga emasheshi e-ESwatini; ESE All Share Index, listing requirements, ne-dividends. vakashela www.ese.co.sz." },
+      { name: "Eswatini C-Trade", details: "Indlela lesebentiswa ngayo ku-ese.co.sz – live quotes ne-order placement." },
+      { name: "Listed Companies (Major)", details: "FNBE, NED, SBC, SEL, SWP, GRYS, INALA, NPC, RSC, AGS – tine ticker codes nge-ESE." },
+      { name: "FNB Eswatini Stockbroking", details: "Vula i-brokerage account, thenge emasheshi ne-bonds nge-FNB." },
+      { name: "Nedbank Eswatini Online Share Trading", details: "Platform yekutreydisana nge-emasheshi e-ESE noma eJSE." },
+      { name: "Standard Bank Eswatini Share Trading", details: "Access equity trading through Standard Bank Private Banking / stockbroking." },
+      { name: "Unit Trusts & Asset Managers", details: "Coronation, Allan Gray, Stanlib, Old Mutual – tiyatsengiswa ngemabhange laseSwatini." },
+      { name: "EasyEquities (SA / accessible in ESwatini)", details: "Thenga emasheshi e-JSE, NYSE, NASDAQ nge fractional investing – app i-fumaneka Eswatini." },
+      { name: "Financial Services Regulatory Authority (FSRA)", details: "Umkhicito wezinsimbi zemali eSwatini – bhalisa, imitsetfo, ne-consumer protection." },
     ],
   },
   {
@@ -110,6 +125,9 @@ const bizLinks: BizLink[] = [
   { name: "Registrar of Companies (Mbabane)", description: "Ministry of Commerce, Industry & Trade – company registration" },
   { name: "Eswatini Revenue Service (ERS)", url: "https://www.ers.org.sz", description: "Tax registration, VAT, PAYE, customs" },
   { name: "Eswatini Investment Promotion Authority (EIPA)", url: "https://www.investeswatini.org.sz", description: "Investor support, incentives, one-stop-shop" },
+  { name: "Eswatini Stock Exchange (ESE)", url: "https://www.ese.co.sz", description: "Official ESE site – prices, listed companies, C-Trade" },
+  { name: "Financial Services Regulatory Authority (FSRA)", url: "https://www.fsra.co.sz", description: "Regulator of securities & non-bank financial institutions" },
+  { name: "EasyEquities", url: "https://www.easyequities.co.za", description: "JSE, US & other equities investing app accessible in Eswatini" },
   { name: "SEDCO", url: "https://www.sedco.co.sz", description: "Small enterprise development, training, factory shells" },
   { name: "FINCORP", url: "https://www.fincorp.co.sz", description: "SME loans & agribusiness finance" },
   { name: "Royal Science & Tech Park", url: "https://www.rstp.org.sz", description: "Innovation hub, incubator, biotech park" },
