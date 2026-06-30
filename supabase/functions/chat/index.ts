@@ -27,9 +27,15 @@ serve(async (req) => {
         },
         body: JSON.stringify({
           model: "google/gemini-3-flash-preview",
+          temperature: 0.4,
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
             ...messages,
+            {
+              role: "system",
+              content:
+                "REMINDER BEFORE REPLYING: Write in PURE SiSwati only. Audit every Nguni word — if it contains 'uku-', '-th-', '-nd-' (where SiSwati uses dz), or isiZulu function words (noma, kodwa, futhi, ngoba, ukuthi, kanti), REWRITE it into SiSwati (ku-, -tf-, -dz-, nobe, kodvwa, futsi, ngobe, kutsi, kantsi) before sending. NEVER output isiZulu. If unsure of a SiSwati word, use the English word instead.",
+            },
           ],
           stream: true,
         }),
