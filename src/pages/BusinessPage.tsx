@@ -1,4 +1,4 @@
-import { ArrowLeft, Briefcase, Building2, FileText, Landmark, TrendingUp, Coins, Users, Search, X, Frown, ExternalLink } from "lucide-react";
+import { ArrowLeft, Briefcase, Building2, FileText, Landmark, TrendingUp, Coins, Users, Search, X, Frown, ExternalLink, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
