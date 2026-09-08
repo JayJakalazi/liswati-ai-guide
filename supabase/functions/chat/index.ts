@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { SYSTEM_PROMPT } from "./systemPrompt.ts";
+import { retrieveKnowledge } from "./knowledgeBase.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -17,6 +18,18 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
+    const lastUser = [...(messages ?? [])]
+      .reverse()
+      .find((m: { role: string; content: unknown }) => m.role === "user");
+    const lastUserText =
+      typeof lastUser?.content === "string"
+        ? lastUser.content
+        : Array.isArray(lastUser?.content)
+        ? lastUser.content.map((p: { text?: string }) => p?.text ?? "").join(" ")
+        : "";
+    const knowledge = retrieveKnowledge(lastUserText);
+    console.log("KB matched:", knowledge ? knowledge.split("\n").length - 6 : 0, "entries");
+
     const response = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
       {
@@ -30,6 +43,7 @@ serve(async (req) => {
           temperature: 0.4,
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
+            ...(knowledge ? [{ role: "system", content: knowledge }] : []),
             ...messages,
             {
               role: "system",
