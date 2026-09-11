@@ -72,9 +72,9 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3.1-flash-tts-preview",
+        model: "openai/gpt-4o-mini-tts",
         input: text,
-        voice: "Kore",
+        voice: "alloy",
         response_format: "mp3",
       }),
     });
