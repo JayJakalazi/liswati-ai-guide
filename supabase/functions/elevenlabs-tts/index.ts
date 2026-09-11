@@ -72,7 +72,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash-preview-tts",
+        model: "google/gemini-3.1-flash-tts-preview",
         input: text,
         voice: "Kore",
         response_format: "mp3",
