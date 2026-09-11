@@ -31,6 +31,14 @@ serve(async (req) => {
     const knowledge = retrieveKnowledge(lastUserText);
     console.log("KB matched:", knowledge ? knowledge.split("\n").length - 6 : 0, "entries");
 
+    let liveData = "";
+    try {
+      liveData = await retrieveLiveData(lastUserText);
+      console.log("Live DB context chars:", liveData.length);
+    } catch (err) {
+      console.error("live data error:", err);
+    }
+
     const response = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
       {
