@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { SYSTEM_PROMPT } from "./systemPrompt.ts";
 import { retrieveKnowledge } from "./knowledgeBase.ts";
+import { retrieveLiveData } from "./liveData.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -30,6 +31,14 @@ serve(async (req) => {
     const knowledge = retrieveKnowledge(lastUserText);
     console.log("KB matched:", knowledge ? knowledge.split("\n").length - 6 : 0, "entries");
 
+    let liveData = "";
+    try {
+      liveData = await retrieveLiveData(lastUserText);
+      console.log("Live DB context chars:", liveData.length);
+    } catch (err) {
+      console.error("live data error:", err);
+    }
+
     const response = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
       {
@@ -44,6 +53,7 @@ serve(async (req) => {
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
             ...(knowledge ? [{ role: "system", content: knowledge }] : []),
+            ...(liveData ? [{ role: "system", content: liveData }] : []),
             ...messages,
             {
               role: "system",
