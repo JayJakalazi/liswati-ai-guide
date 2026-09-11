@@ -22,49 +22,74 @@ serve(async (req) => {
     }
 
     const ELEVENLABS_API_KEY = Deno.env.get("ELEVENLABS_API_KEY");
-    if (!ELEVENLABS_API_KEY) {
-      throw new Error("ELEVENLABS_API_KEY is not configured");
+
+    // Try ElevenLabs first when a key is configured
+    if (ELEVENLABS_API_KEY) {
+      const selectedVoice = voiceId || "EXAVITQu4vr4xnSDxMaL";
+      const el = await fetch(
+        `https://api.elevenlabs.io/v1/text-to-speech/${selectedVoice}?output_format=mp3_44100_128`,
+        {
+          method: "POST",
+          headers: {
+            "xi-api-key": ELEVENLABS_API_KEY,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text,
+            model_id: "eleven_turbo_v2_5",
+            voice_settings: {
+              stability: 0.5,
+              similarity_boost: 0.75,
+              style: 0.4,
+              use_speaker_boost: true,
+            },
+          }),
+        }
+      );
+
+      if (el.ok) {
+        return new Response(await el.arrayBuffer(), {
+          headers: { ...corsHeaders, "Content-Type": "audio/mpeg" },
+        });
+      }
+
+      console.error("ElevenLabs failed, falling back:", el.status, await el.text());
     }
 
-    const selectedVoice = voiceId || "EXAVITQu4vr4xnSDxMaL"; // Sarah voice default
+    // Fallback: Lovable AI Gateway text-to-speech (no external key needed)
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) {
+      return new Response(JSON.stringify({ error: "No TTS provider configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
-    const response = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${selectedVoice}?output_format=mp3_44100_128`,
-      {
-        method: "POST",
-        headers: {
-          "xi-api-key": ELEVENLABS_API_KEY,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text,
-          model_id: "eleven_turbo_v2_5",
-          voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.75,
-            style: 0.4,
-            use_speaker_boost: true,
-          },
-        }),
-      }
-    );
+    const gw = await fetch("https://ai.gateway.lovable.dev/v1/audio/speech", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-4o-mini-tts",
+        input: text,
+        voice: "alloy",
+        response_format: "mp3",
+      }),
+    });
 
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error("ElevenLabs TTS error:", response.status, errText);
+    if (!gw.ok) {
+      const errText = await gw.text();
+      console.error("Gateway TTS error:", gw.status, errText);
       return new Response(
-        JSON.stringify({ error: "TTS generation failed" }),
-        { status: response.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        JSON.stringify({ error: "TTS generation failed", status: gw.status, details: errText }),
+        { status: gw.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    const audioBuffer = await response.arrayBuffer();
-
-    return new Response(audioBuffer, {
-      headers: {
-        ...corsHeaders,
-        "Content-Type": "audio/mpeg",
-      },
+    return new Response(await gw.arrayBuffer(), {
+      headers: { ...corsHeaders, "Content-Type": "audio/mpeg" },
     });
   } catch (e) {
     console.error("TTS error:", e);
