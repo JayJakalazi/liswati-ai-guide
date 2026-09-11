@@ -53,6 +53,7 @@ serve(async (req) => {
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
             ...(knowledge ? [{ role: "system", content: knowledge }] : []),
+            ...(liveData ? [{ role: "system", content: liveData }] : []),
             ...messages,
             {
               role: "system",
