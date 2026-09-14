@@ -2,8 +2,11 @@
 // Returns a compact, factual context block the model must ground its answer in.
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
-const SERVICE_KEY =
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+// Least privilege: use the public (anon) key — these are public read-only reference tables.
+// The service-role key is deliberately NOT used here, so the AI path can never read or write
+// anything beyond what a normal visitor may read.
+const SERVICE_KEY = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+
 
 const HEALTH_HINTS = [
   "clinic", "clinics", "hospital", "sibhedlela", "umtfolamphilo", "doctor", "dokotela",
